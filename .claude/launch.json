@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "nexora",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "http-server", "nexora", "-p", "4173", "-c-1", "--silent"],
+      "port": 4173
+    }
+  ]
+}

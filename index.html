@@ -1,430 +1,528 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BRANZLY — Next-Gen AI Agentura</title>
-  <meta name="description" content="BRANZLY — AI agentura z Plzně. Automatizace, immersivní weby, AI nástroje a aplikace." />
-
+  <title>Nexora — AI agent that turns chats into outcomes</title>
+  <meta name="description" content="Nexora is an AI agent that turns conversation into execution — ask anything, get verified answers, and trigger actions in seconds." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23fff3f0' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23fff3f0'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-      "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
-      "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js"
-    }
-  }
-  </script>
 </head>
 <body>
 
-  <!-- Custom cursor -->
-  <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
-
-  <!-- WebGL background -->
-  <canvas id="webgl-canvas"></canvas>
-
-  <!-- Grain / noise overlay -->
-  <div id="noise"></div>
-
-  <!-- Scroll progress bar -->
-  <div id="prog"></div>
-
-  <!-- Loader -->
-  <div id="loader">
-    <div class="loader__brand mono">BRAN<span class="gld">ZLY</span></div>
-    <div class="loader__bar">
-      <div class="loader__fill" id="loaderFill"></div>
-    </div>
-    <span class="loader__label mono" id="loaderPct">0%</span>
-  </div>
-
-  <!-- Notification -->
-  <div id="notif" class="mono">
-    Zpráva odeslána — odpovíme do 24 hodin.
-  </div>
-
-  <!-- Header -->
-  <header id="header">
-    <button class="n-logo mono" data-go="0" aria-label="Domů">BRAN<span class="gld">ZLY</span></button>
-    <nav class="nav">
-      <button class="n-link mono" data-go="1">O nás</button>
-      <button class="n-link mono" data-go="2">Služby</button>
-      <button class="n-link mono" data-go="4">Ceník</button>
-      <button class="n-link n-cta mono" data-go="5">Konzultace →</button>
+  <!-- ============ HEADER ============ -->
+  <header class="site-head" id="siteHead">
+    <a class="brand" href="#top" aria-label="Nexora — home">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__word">Nexora</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#why">Why Nexora</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#blog">Blog</a>
     </nav>
+    <a class="btn btn--primary btn--sm" href="#cta">Get started</a>
   </header>
 
-  <!-- Dot navigation -->
-  <div id="dotnav" aria-label="Navigace sekcí"></div>
+  <main id="top">
 
-  <!-- Section counter -->
-  <div id="secIdx" class="mono">01 / 07</div>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="hero__sky" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
+      <img class="hero__hills hero__hills--far" src="https://framerusercontent.com/images/h5VHoQg2qBhfygdenEQ0WUtEZU.png?width=2464&height=909" alt="" aria-hidden="true" />
+      <img class="hero__hills hero__hills--mid" src="https://framerusercontent.com/images/T6hTfVKiQ81oLHCljxjb0WPLHY8.png?width=2464&height=848" alt="" aria-hidden="true" />
 
-  <!-- Sections wrapper -->
-  <main id="sw">
+      <div class="hero__content">
+        <a class="ticker-chip reveal" href="#blog">
+          <span class="ticker-chip__track">
+            <span>New: Saved answers and collections</span>
+          </span>
+          <span class="ticker-chip__arrow" aria-hidden="true">→</span>
+        </a>
 
-    <!-- ── HERO (s0) ── -->
-    <section class="sec sec--hero" id="s0" data-index="0">
-      <div class="s-inner">
-        <div class="htag mono" data-reveal>
-          <span class="ldot"></span>Next-Gen AI Agentura · Plzeň · CZ
-        </div>
-        <h1 class="bh" data-split>BRAN<span class="gld">ZLY</span></h1>
-        <p class="sdesc" data-reveal>
-          Automatizujeme firemní procesy. Stavíme immersivní digitální zážitky.
-          Budujeme AI nástroje, které pracují za vás — 24 hodin denně, 7 dní v týdnu.
-        </p>
-        <div class="hero-cta" data-reveal>
-          <button class="btng mono" data-go="5">Rezervovat konzultaci</button>
-          <button class="btno mono" data-go="2">Naše služby</button>
+        <h1 class="hero__title reveal">Solid AI agent that turns chats into outcomes</h1>
+        <p class="hero__sub reveal">Ask anything, get verified answers, and trigger actions in seconds.</p>
+
+        <div class="hero__cta reveal">
+          <a class="btn btn--primary" href="#cta">Get started</a>
+          <button class="btn btn--play" aria-label="Play demo">
+            <span class="btn__play-icon" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
-      <div class="scroll-cue mono" data-reveal>
-        <span>Scroll dolů</span>
-        <div class="sbar"></div>
+
+      <!-- chat mockup -->
+      <div class="chat reveal" data-tilt>
+        <div class="chat__glow" aria-hidden="true"></div>
+        <div class="chat__head">
+          <h4 class="chat__welcome">Welcome back</h4>
+          <p class="chat__hint">How can I help you today, Alex?</p>
+        </div>
+        <div class="chat__input">
+          <p>Ask anything. Type @ for mentions and / for shortcuts.</p>
+          <div class="chat__input-bar">
+            <div class="chat__icons">
+              <span class="ci ci--paperclip" aria-hidden="true"></span>
+              <span class="ci ci--mic" aria-hidden="true"></span>
+              <span class="ci ci--send" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+        <div class="chat__body">
+          <div class="chat__tabs">
+            <button class="chat__tab is-active">Research</button>
+            <button class="chat__tab">Support Ops</button>
+            <button class="chat__tab">Writing</button>
+            <button class="chat__tab">Actions</button>
+          </div>
+          <ul class="chat__suggestions">
+            <li>Summarize our product in simple terms for new users <span aria-hidden="true">↗</span></li>
+            <li>Draft a friendly support reply using our help docs <span aria-hidden="true">↗</span></li>
+            <li class="hide-sm">Write a concise follow-up email after a sales call <span aria-hidden="true">↗</span></li>
+            <li class="hide-sm">Extract action items and owners from this meeting note <span aria-hidden="true">↗</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <img class="hero__hills hero__hills--front" src="https://framerusercontent.com/images/rNwNiQxFN2tkAEI5eUdmAxB9v4.png?width=2464&height=488" alt="" aria-hidden="true" />
+    </section>
+
+    <!-- ============ INTRO ============ -->
+    <section class="section intro" id="intro">
+      <div class="container">
+        <span class="chip reveal">Intro</span>
+        <div class="intro__text">
+          <p class="scrub-text">Nexora is an AI agent that turns conversation into execution, delivering clear answers and ready-to-use drafts in seconds.</p>
+          <p class="scrub-text">It connects to your docs and tools, keeps context across threads, and surfaces sources so teams can trust what they ship.</p>
+          <p class="scrub-text">From support to ops to sales, Nexora handles the busywork and triggers real actions so work keeps moving without tab switching.</p>
+        </div>
+      </div>
+
+      <div class="logos">
+        <div class="logos__track">
+          <span>Layerform</span><span>Northwind</span><span>Cobalt</span><span>Meridian</span><span>Aperture</span><span>Vantage</span>
+          <span>Layerform</span><span>Northwind</span><span>Cobalt</span><span>Meridian</span><span>Aperture</span><span>Vantage</span>
+        </div>
       </div>
     </section>
 
-    <!-- ── MANIFESTO (s1) ── -->
-    <section class="sec" id="s1" data-index="1">
-      <div class="s-inner two">
-        <div>
-          <div class="eyebrow mono" data-reveal>// 01 · Manifesto</div>
-          <h2 class="sh" data-split>Nejsme agentura. <em>Jsme zbroj</em> byznysu.</h2>
-          <div class="mqtext" data-reveal>
-            Zatímco ostatní prodávají sliby, my dodáváme <strong>měřitelné výsledky</strong>.
-            Průměrná úspora 60–80&nbsp;% manuální práce u prvního projektu.<br /><br />
-            Branzly je agency z Plzně s jednou vizí —
-            <strong>brutální technologická výhoda</strong> pro firmy, které si nechtějí
-            nechat ujít vlak.
-          </div>
-        </div>
-
-        <div class="ibs" data-reveal-stagger>
-          <div class="ib">
-            <div class="ibn mono">01</div>
-            <div class="ibt">Přímý kontakt se zakladateli</div>
-            <div class="ibb">Žádní prostředníci. Komunikujete přímo s těmi, kdo váš projekt navrhují, staví a odpovídají za výsledek.</div>
-          </div>
-          <div class="ib">
-            <div class="ibn mono">02</div>
-            <div class="ibt">Early Adopter výhoda</div>
-            <div class="ibb">Prvních 10 klientů — ceny o 20–40&nbsp;% nižší, garantované 24 měsíců. Naše investice do dlouhodobého partnerství.</div>
-          </div>
-          <div class="ib">
-            <div class="ibn mono">03</div>
-            <div class="ibt">Best-in-class AI stack</div>
-            <div class="ibb">GPT-4o, Claude, Gemini Ultra — vybíráme vždy to nejlepší pro váš případ, ne to, co je nejpohodlnější pro nás.</div>
-          </div>
-          <div class="ib">
-            <div class="ibn mono">04</div>
-            <div class="ibt">Agilní bez zbytečností</div>
-            <div class="ibb">Sprinty, demo sessions každý týden, žádná překvapení. Od nápadu k produkci za rekordní čas.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLUŽBY (s2) ── -->
-    <section class="sec" id="s2" data-index="2">
-      <div class="s-inner full">
-        <div class="two head-row">
+    <!-- ============ FEATURES ============ -->
+    <section class="section features" id="features">
+      <div class="container">
+        <div class="section-head">
           <div>
-            <div class="eyebrow mono" data-reveal>// 02 · Služby</div>
-            <h2 class="sh" data-split>Kompletní <em>AI arzenál</em></h2>
+            <span class="chip reveal">Core Features</span>
+            <h2 class="section-title reveal">One unified platform to run <span class="muted">your entire organization</span></h2>
           </div>
-          <p class="sdesc" data-reveal>
-            Každá ze služeb stojí samostatně nebo je součástí komplexní digitální transformace. Vy si vybíráte, my dodáváme.
-          </p>
+          <p class="section-lead reveal">Nexora is an AI agent that turns conversation into execution, delivering clear answers in seconds.</p>
         </div>
 
-        <div class="srvl" data-reveal-stagger>
-          <div class="si">
-            <div class="sin mono">01</div>
-            <div>
-              <div class="sititle">AI Automatizace</div>
-              <div class="sitags">
-                <span class="sitag mono">Workflow AI</span>
-                <span class="sitag mono">Multi-Agent</span>
-                <span class="sitag mono">n8n / Make</span>
-                <span class="sitag mono">RPA</span>
-              </div>
-            </div>
-            <div class="siarr">→</div>
+        <div class="showcase reveal">
+          <div class="showcase__tabs" role="tablist">
+            <button class="showcase__tab is-active" data-i="0">Ask</button>
+            <button class="showcase__tab" data-i="1">Verify</button>
+            <button class="showcase__tab" data-i="2">Execute</button>
+            <button class="showcase__tab" data-i="3">Measure</button>
           </div>
-
-          <div class="si">
-            <div class="sin mono">02</div>
-            <div>
-              <div class="sititle">Tvorba Webů</div>
-              <div class="sitags">
-                <span class="sitag mono">React/Next.js</span>
-                <span class="sitag mono">WebGL</span>
-                <span class="sitag mono">Three.js</span>
-                <span class="sitag mono">E-commerce</span>
-              </div>
-            </div>
-            <div class="siarr">→</div>
+          <div class="showcase__stage">
+            <img class="showcase__img is-active" data-i="0" src="https://framerusercontent.com/images/ZCUolRzdTgZF2qcr3flePPx2dk.jpg?width=2500&height=1406" alt="Empty state dashboard with quick-action prompts" />
+            <img class="showcase__img" data-i="1" src="https://framerusercontent.com/images/v9Yr4trFZsygSFKIZye6oMUY4.jpg?width=2500&height=1406" alt="AI response with source citations panel" />
+            <img class="showcase__img" data-i="2" src="https://framerusercontent.com/images/hg3Tg24LlqTuZEp7hHXSGwPQ9U.jpg?width=2500&height=1406" alt="Ticket creation flow with approval prompt" />
+            <img class="showcase__img" data-i="3" src="https://framerusercontent.com/images/eFufq0tptTi9Qq7gFHic5a5E.jpg?width=2500&height=1406" alt="Support analytics dashboard" />
           </div>
-
-          <div class="si">
-            <div class="sin mono">03</div>
-            <div>
-              <div class="sititle">Vývoj Aplikací</div>
-              <div class="sitags">
-                <span class="sitag mono">SaaS</span>
-                <span class="sitag mono">React Native</span>
-                <span class="sitag mono">iOS/Android</span>
-                <span class="sitag mono">Python</span>
-              </div>
-            </div>
-            <div class="siarr">→</div>
-          </div>
-
-          <div class="si">
-            <div class="sin mono">04</div>
-            <div>
-              <div class="sititle">AI Chatboty</div>
-              <div class="sitags">
-                <span class="sitag mono">GPT-4o</span>
-                <span class="sitag mono">Claude</span>
-                <span class="sitag mono">RAG</span>
-                <span class="sitag mono">Fine-tuning</span>
-              </div>
-            </div>
-            <div class="siarr">→</div>
-          </div>
-
-          <div class="si">
-            <div class="sin mono">05</div>
-            <div>
-              <div class="sititle">Datová Analytika</div>
-              <div class="sitags">
-                <span class="sitag mono">ML Models</span>
-                <span class="sitag mono">Grafana</span>
-                <span class="sitag mono">BI</span>
-                <span class="sitag mono">Predikce</span>
-              </div>
-            </div>
-            <div class="siarr">→</div>
-          </div>
-
-          <div class="si">
-            <div class="sin mono">06</div>
-            <div>
-              <div class="sititle">AI Strategie</div>
-              <div class="sitags">
-                <span class="sitag mono">Audit</span>
-                <span class="sitag mono">Roadmapa</span>
-                <span class="sitag mono">ROI Analýza</span>
-                <span class="sitag mono">Workshopy</span>
-              </div>
-            </div>
-            <div class="siarr">→</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── PROCES (s3) ── -->
-    <section class="sec" id="s3" data-index="3">
-      <div class="s-inner two">
-        <div>
-          <div class="eyebrow mono" data-reveal>// 03 · Jak pracujeme</div>
-          <h2 class="sh" data-split>Od nápadu k produkci — <em>bez zbytečností</em></h2>
-          <p class="sdesc" data-reveal style="margin-top:1.2rem">
-            Každý krok jasný dopředu. Žádná překvapení, žádné skryté poplatky.
-          </p>
-        </div>
-
-        <div class="steps" data-reveal-stagger>
-          <div class="stp">
-            <div class="stpn mono">01</div>
-            <div>
-              <div class="stpt mono">Discovery &amp; Strategie</div>
-              <div class="stpb">AI roadmapa s ROI odhadem. Trvá 1–3 dny.</div>
-            </div>
-          </div>
-          <div class="stp">
-            <div class="stpn mono">02</div>
-            <div>
-              <div class="stpt mono">Design &amp; Prototyp</div>
-              <div class="stpb">První prototyp do 2 týdnů — vidíte výsledek dříve než podepíšete.</div>
-            </div>
-          </div>
-          <div class="stp">
-            <div class="stpn mono">03</div>
-            <div>
-              <div class="stpt mono">Vývoj &amp; Integrace</div>
-              <div class="stpb">Agilní sprinty, demo sessions, QA. Plná integrace se systémy.</div>
-            </div>
-          </div>
-          <div class="stp">
-            <div class="stpn mono">04</div>
-            <div>
-              <div class="stpt mono">Launch &amp; Optimalizace</div>
-              <div class="stpb">30denní bezplatná optimalizace po launchi na základě dat.</div>
-            </div>
-          </div>
-          <div class="stp">
-            <div class="stpn mono">05</div>
-            <div>
-              <div class="stpt mono">Partnerství &amp; Škálování</div>
-              <div class="stpb">Dlouhodobá spolupráce. Škálujeme s vaším byznysem.</div>
+          <div class="showcase__foot">
+            <p class="showcase__cap" data-i="0">Start with a question and move faster from the first prompt.</p>
+            <div class="showcase__nav">
+              <button class="icon-btn" data-dir="-1" aria-label="Previous">←</button>
+              <button class="icon-btn" data-dir="1" aria-label="Next">→</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── CENÍK (s4) ── -->
-    <section class="sec" id="s4" data-index="4">
-      <div class="s-inner full">
-        <div class="two head-row">
+    <!-- ============ WHY ============ -->
+    <section class="section why" id="why">
+      <div class="container">
+        <div class="section-head">
           <div>
-            <div class="eyebrow mono" data-reveal>// 04 · Ceník</div>
-            <h2 class="sh" data-split>Férové <em>investice</em></h2>
+            <span class="chip reveal">Why Nexora</span>
+            <h2 class="section-title reveal">One AI agent for <span class="muted">answers, actions, and momentum</span></h2>
           </div>
-          <p class="sdesc" data-reveal>
-            Transparentní ceny bez skrytých poplatků. Vyberte si plán, který roste s vaším byznysem.
-          </p>
+          <p class="section-lead reveal">Nexora brings knowledge, context, and execution into a single handy interface.</p>
         </div>
 
-        <div class="pgrid" data-reveal-stagger>
-          <div class="plan">
-            <div class="pt2 mono">Základní</div>
-            <div class="pname">Basic</div>
-            <div class="pprice">4 485</div>
-            <div class="pper mono">Kč / měsíčně</div>
-            <div class="pl"></div>
-            <div class="pf">1 AI agent 24/7</div>
-            <div class="pf">50 operací / měsíc</div>
-            <div class="pf">7 dní log historie</div>
-            <div class="pf">Emailová podpora</div>
-            <div class="pf off">Export dat</div>
-            <div class="pf off">API přístup</div>
-            <button class="pbtn mono" data-go="5">Začít</button>
-          </div>
+        <div class="why__row reveal">
+          <article class="why-card">
+            <div class="why-card__art why-card__art--a" aria-hidden="true"></div>
+            <h3>Shared context</h3>
+            <p>Bring docs, tools, and team knowledge into one place.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-card__art why-card__art--b" aria-hidden="true"></div>
+            <h3>Trusted answers</h3>
+            <p>Get clear responses with sources and useful context.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-card__art why-card__art--c" aria-hidden="true"></div>
+            <h3>Instant action</h3>
+            <p>Turn prompts into tickets, replies, drafts, and next steps.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-card__art why-card__art--d" aria-hidden="true"></div>
+            <h3>Built-in control</h3>
+            <p>Keep work aligned with policies, access, and approvals.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-card__art why-card__art--e" aria-hidden="true"></div>
+            <h3>Continuous insight</h3>
+            <p>Get insights, spot patterns, gaps, and ways to improve faster.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-          <div class="plan plan--feat">
-            <div class="pbadge mono">Nejoblíbenější</div>
-            <div class="pt2 mono">Profesionální</div>
-            <div class="pname">Pro</div>
-            <div class="pprice">11 985</div>
-            <div class="pper mono">Kč / měsíčně</div>
-            <div class="pl"></div>
-            <div class="pf">5 AI agentů 24/7</div>
-            <div class="pf">500 operací / měsíc</div>
-            <div class="pf">30 dní log historie</div>
-            <div class="pf">Prioritní podpora 4h SLA</div>
-            <div class="pf">Export CSV / JSON</div>
-            <div class="pf off">REST API přístup</div>
-            <button class="pbtn mono" data-go="5">Vybrat Pro</button>
+    <!-- ============ WHAT YOU GET (sticky cards) ============ -->
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="chip reveal">What you get</span>
+            <h2 class="section-title reveal">Ask a question and <span class="muted">get real progress</span></h2>
           </div>
+          <p class="section-lead reveal">Nexora helps teams find the right context, take the next step, and improve how work gets done.</p>
+        </div>
 
-          <div class="plan">
-            <div class="pt2 mono">Podnikový</div>
-            <div class="pname">Business</div>
-            <div class="pprice pprice--custom">Na dotaz</div>
-            <div class="pper mono">Individuální řešení</div>
-            <div class="pl"></div>
-            <div class="pf">20 AI agentů 24/7</div>
-            <div class="pf">Neomezené operace</div>
-            <div class="pf">365 dní log historie</div>
-            <div class="pf">Dedikovaná podpora 1h SLA</div>
-            <div class="pf">Export CSV / JSON / XML</div>
-            <div class="pf">REST API přístup</div>
-            <button class="pbtn mono" data-go="5">Kontaktujte nás</button>
+        <div class="stack">
+          <article class="stack-card">
+            <div class="stack-card__copy">
+              <span class="chip chip--ghost">Shared context</span>
+              <h4>Bring docs, tools, and team knowledge into one place.</h4>
+              <p>Connect the information your team relies on, so every answer starts with the right context.</p>
+              <div class="stack-card__note"><span class="dot" aria-hidden="true"></span>One source of truth for every reply.</div>
+            </div>
+            <div class="stack-card__media">
+              <img src="https://framerusercontent.com/images/D7e4TugadmJTFjHpPSKhXEtOnk.jpg?width=1596&height=1692" alt="Connected knowledge sources with a chat answering a client renewal query" loading="lazy" />
+            </div>
+          </article>
+
+          <article class="stack-card">
+            <div class="stack-card__copy">
+              <span class="chip chip--ghost">Instant action</span>
+              <h4>Turn prompts into tickets, drafts, and next steps.</h4>
+              <p>Move work forward directly from the chat, without jumping between tools or losing momentum.</p>
+              <div class="stack-card__note"><span class="dot" aria-hidden="true"></span>From question to action in one flow.</div>
+            </div>
+            <div class="stack-card__media">
+              <img src="https://framerusercontent.com/images/egCROtkGjJt43Q9SunwaHjvGUL4.jpg?width=1596&height=1692" alt="Ticket creation modal illustrating prompt-to-action workflows" loading="lazy" />
+            </div>
+          </article>
+
+          <article class="stack-card">
+            <div class="stack-card__copy">
+              <span class="chip chip--ghost">Continuous insight</span>
+              <h4>Spot patterns, gaps, and ways to improve faster.</h4>
+              <p>See what people ask, where friction appears, and what needs attention across the workspace.</p>
+              <div class="stack-card__note"><span class="dot" aria-hidden="true"></span>Clear signals from real conversations.</div>
+            </div>
+            <div class="stack-card__media">
+              <img src="https://framerusercontent.com/images/jwCVtbSWlvsuvrIejVWwVB7mAU.jpg?width=1596&height=1692" alt="Trends dashboard with weekly insight bullets" loading="lazy" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INTEGRATIONS ============ -->
+    <section class="section integrations" id="integrations">
+      <div class="container integrations__grid">
+        <div class="integrations__orbit" aria-hidden="true">
+          <div class="orbit orbit--1"><span></span><span></span><span></span><span></span></div>
+          <div class="orbit orbit--2"><span></span><span></span><span></span><span></span></div>
+          <div class="orbit orbit--3"><span></span><span></span><span></span></div>
+          <div class="orbit__core"></div>
+        </div>
+        <div class="integrations__body">
+          <span class="chip reveal">Integrations</span>
+          <h2 class="section-title reveal">Connect the systems <span class="bright">behind your workflow</span></h2>
+          <p class="section-lead reveal">Nexora plugs into your docs, CRM, support stack, and internal tools to turn scattered context into clear answers and action.</p>
+          <div class="integrations__list">
+            <div class="int-row"><div><strong>Source connect</strong><span>Connect helpdesk, CRM, and knowledge.</span></div><span class="int-row__ico">⚡</span></div>
+            <div class="int-row"><div><strong>Action runner</strong><span>Run tasks across your connected tools.</span></div><span class="int-row__ico">↗</span></div>
+            <div class="int-row"><div><strong>Approval gate</strong><span>Require approval for sensitive actions.</span></div><span class="int-row__ico">✓</span></div>
+            <div class="int-row"><div><strong>Audit and insights</strong><span>Track every change and spot patterns.</span></div><span class="int-row__ico">◫</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── KONTAKT (s5) ── -->
-    <section class="sec" id="s5" data-index="5">
-      <div class="s-inner cgrid">
-        <div>
-          <div class="eyebrow mono" data-reveal>// 05 · Kontakt</div>
-          <h2 class="sh" data-split>Buďte náš <em>první klient</em></h2>
-          <div data-reveal style="margin-top:2rem">
-            <div class="crow"><div class="crl mono">Email</div><div class="crv">agencybranzly@gmail.com</div></div>
-            <div class="crow"><div class="crl mono">Sídlo</div><div class="crv">Plzeň, Česká republika</div></div>
-            <div class="crow"><div class="crl mono">Odezva</div><div class="crv">Do 24 hodin</div></div>
-            <div class="crow"><div class="crl mono">Status</div><div class="crv crv--accent">Early Adopter místa k dispozici</div></div>
+    <!-- ============ CHANGELOG ============ -->
+    <section class="section changelog" id="changelog">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="chip reveal">Changelog</span>
+            <h2 class="section-title reveal">New features, fixes, and improvements</h2>
           </div>
+          <a class="link-arrow reveal" href="#changelog">See all updates →</a>
         </div>
 
-        <form class="cform" data-reveal id="contactForm" novalidate>
-          <div class="fg2">
-            <div class="fgrp">
-              <label class="flab mono">Jméno</label>
-              <input class="finp" type="text" placeholder="Jan Novák" />
+        <div class="log">
+          <a class="log__item reveal" href="#changelog">
+            <span class="log__rail" aria-hidden="true"></span>
+            <div class="log__main">
+              <strong>Saved answers and collections</strong>
+              <p>Save any Nexora response as a verified answer and organize it into collections — a living knowledge base that builds itself as your team works.</p>
             </div>
-            <div class="fgrp">
-              <label class="flab mono">Email</label>
-              <input class="finp" type="email" placeholder="jan@firma.cz" />
+            <time datetime="2026-03-23">Mar 23, 2026</time>
+          </a>
+          <a class="log__item reveal" href="#changelog">
+            <span class="log__rail" aria-hidden="true"></span>
+            <div class="log__main">
+              <strong>Source attribution v2</strong>
+              <p>Every response now links to the exact paragraph, row, or message it pulled from. Click a source badge and jump straight to the highlighted passage in context.</p>
             </div>
-          </div>
-
-          <div class="fgrp">
-            <label class="flab mono">Společnost</label>
-            <input class="finp" type="text" placeholder="Vaše společnost" />
-          </div>
-
-          <div class="fgrp">
-            <label class="flab mono">Zájem o</label>
-            <select class="finp">
-              <option value="" disabled selected>Vyberte službu</option>
-              <option>AI Automatizace</option>
-              <option>Tvorba webu</option>
-              <option>Mobilní aplikace</option>
-              <option>AI Chatbot</option>
-              <option>Datová analytika</option>
-              <option>Nevím – konzultace</option>
-            </select>
-          </div>
-
-          <div class="fgrp">
-            <label class="flab mono">Projekt</label>
-            <textarea class="finp fta" placeholder="Stručně popište svůj projekt..."></textarea>
-          </div>
-
-          <button class="fsub mono" id="fsubBtn" type="submit">Odeslat zprávu →</button>
-        </form>
+            <time datetime="2026-03-04">Mar 4, 2026</time>
+          </a>
+          <a class="log__item reveal" href="#changelog">
+            <span class="log__rail" aria-hidden="true"></span>
+            <div class="log__main">
+              <strong>Team permissions and roles</strong>
+              <p>Workspaces now support granular role-based access. Assign Admins, Editors, or Viewers to control who can connect sources, trigger actions, and manage billing.</p>
+            </div>
+            <time datetime="2026-02-10">Feb 10, 2026</time>
+          </a>
+          <a class="log__item reveal" href="#changelog">
+            <span class="log__rail" aria-hidden="true"></span>
+            <div class="log__main">
+              <strong>Workspace actions</strong>
+              <p>Nexora can now execute actions directly inside your connected tools — create a ticket, update a deal, send a message, or log a note, all from the same conversation.</p>
+            </div>
+            <time datetime="2026-01-20">Jan 20, 2026</time>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- ── FINAL CTA (s6) ── -->
-    <section class="sec sec--cta" id="s6" data-index="6">
-      <div class="ctai">
-        <div class="ctag mono" data-reveal>Jste připraveni?</div>
-        <h2 class="ctah" data-split>Začněme <em>společně</em></h2>
-        <p class="ctasub mono" data-reveal>Bezplatná 30min konzultace · Bez závazků · Odpověď do 24h</p>
+    <!-- ============ PRICING ============ -->
+    <section class="section pricing" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="chip reveal">Pricing</span>
+            <h2 class="section-title reveal">Clear pricing plans that scale with you</h2>
+          </div>
+          <div class="reveal price-toggle">
+            <button class="is-active" data-cycle="year">Yearly</button>
+            <button data-cycle="month">Monthly</button>
+          </div>
+        </div>
 
-        <div class="btns" data-reveal>
-          <button class="btng mono" data-go="5">Rezervovat konzultaci</button>
-          <button class="btno mono" data-go="4">Zobrazit ceník</button>
+        <div class="plans reveal">
+          <article class="plan">
+            <div class="plan__head">
+              <span class="plan__kicker">STARTER</span>
+              <div class="plan__price"><span class="plan__amount">Free</span></div>
+              <p class="plan__desc">For small teams getting started with AI support.</p>
+            </div>
+            <a class="btn btn--ghost plan__cta" href="#cta">Get Started</a>
+            <ul class="plan__feats">
+              <li><span class="feat-val">Team members: Up to 3</span></li>
+              <li><span class="feat-val">AI queries / mo: 200</span></li>
+              <li><span class="feat-val">Integrations: 2</span></li>
+              <li class="on">Source attribution</li>
+              <li class="off">Conversation history</li>
+              <li class="off">Slack notifications</li>
+              <li class="off">API access</li>
+            </ul>
+          </article>
+
+          <article class="plan plan--feat">
+            <div class="plan__head">
+              <span class="plan__kicker">BASIC</span>
+              <div class="plan__price"><span class="plan__amount" data-month="24" data-year="19">$19</span><span class="plan__per">/month</span></div>
+              <p class="plan__desc">For growing teams that need reliable answers.</p>
+            </div>
+            <a class="btn btn--primary plan__cta" href="#cta">Get Started</a>
+            <ul class="plan__feats">
+              <li><span class="feat-val">Team members: Unlimited</span></li>
+              <li><span class="feat-val">AI queries / mo: 2,000</span></li>
+              <li><span class="feat-val">Integrations: Unlimited</span></li>
+              <li class="on">Source attribution</li>
+              <li class="on">Conversation history</li>
+              <li class="on">Slack notifications</li>
+              <li class="off">API access</li>
+            </ul>
+          </article>
+
+          <article class="plan">
+            <div class="plan__head">
+              <span class="plan__kicker">PRO</span>
+              <div class="plan__price"><span class="plan__amount" data-month="59" data-year="49">$49</span><span class="plan__per">/month</span></div>
+              <p class="plan__desc">For orgs with advanced security and scale needs.</p>
+            </div>
+            <a class="btn btn--ghost plan__cta" href="#cta">Get Started</a>
+            <ul class="plan__feats">
+              <li><span class="feat-val">Team members: Unlimited</span></li>
+              <li><span class="feat-val">AI queries / mo: Unlimited</span></li>
+              <li><span class="feat-val">Integrations: Unlimited</span></li>
+              <li class="on">Source attribution</li>
+              <li class="on">Conversation history</li>
+              <li class="on">Slack notifications</li>
+              <li class="on">API access</li>
+            </ul>
+          </article>
         </div>
       </div>
+    </section>
 
-      <div class="site-footer" data-reveal>
-        <div class="flogo mono">BRAN<span class="gld">ZLY</span></div>
-        <p class="fp mono">AI Agency · Plzeň · CZ</p>
-        <p class="fp mono">© 2025 Branzly · Všechna práva vyhrazena</p>
+    <!-- ============ FAQ ============ -->
+    <section class="section faq" id="faq">
+      <div class="container faq__grid">
+        <div class="faq__aside">
+          <span class="chip reveal">FAQ</span>
+          <h2 class="section-title reveal">Answers to the questions that come up most.</h2>
+          <p class="section-lead reveal">Learn how Nexora works, what it connects to, how actions are handled, and what teams can expect day to day.</p>
+          <div class="faq__card">
+            <h6>Got Questions?</h6>
+            <p>Need help with something? Our team is here to make things easy. Don't hesitate to reach out.</p>
+            <a class="link-arrow" href="mailto:hello@nexora.ai">Email us →</a>
+          </div>
+        </div>
+
+        <div class="faq__main">
+          <div class="faq__tabs">
+            <button class="is-active" data-set="general">General</button>
+            <button data-set="ai">AI &amp; Capabilities</button>
+            <button data-set="sec">Integrations &amp; Security</button>
+          </div>
+          <div class="faq__list" id="faqList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section testimonials" id="testimonials">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <span class="chip reveal">Testimonials</span>
+          <h2 class="section-title reveal">What enterprise teams say about Nexora</h2>
+          <p class="section-lead reveal">Customers rely on Nexora to turn scattered knowledge into clear answers, faster decisions, and real progress.</p>
+        </div>
+
+        <div class="quote reveal">
+          <div class="quote__body">
+            <p class="quote__text" id="quoteText">We cut our average ticket resolution time from 12 minutes to under 3. Nexora pulls the right answer from our docs before our agents even finish reading the ticket.</p>
+            <div class="quote__foot">
+              <div class="quote__who">
+                <strong id="quoteName">Sarah Chen</strong>
+                <span id="quoteRole">Head of Support, Layerform</span>
+              </div>
+              <div class="quote__dots" id="quoteDots"></div>
+            </div>
+          </div>
+          <div class="quote__avatar">
+            <img id="quoteImg" src="https://framerusercontent.com/images/2uayq1aC9XZcwLgTTRK6M2ok8KE.jpg?width=1450&height=1925" alt="Customer portrait" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOG ============ -->
+    <section class="section blog" id="blog">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="chip reveal">Blog</span>
+            <h2 class="section-title reveal">Ideas, updates, and practical AI workflows</h2>
+          </div>
+          <a class="link-arrow reveal" href="#blog">Visit blog →</a>
+        </div>
+
+        <div class="posts">
+          <a class="post reveal" href="#blog">
+            <div class="post__img"><img src="https://framerusercontent.com/images/ynhYjI9b7gEqESVHaqk4kb82qf4.jpg?width=1925&height=1450" alt="" loading="lazy" /></div>
+            <h6>How AI Agents Are Replacing Tab-Heavy Workflows</h6>
+            <div class="post__meta"><span>Industry</span><span class="dot" aria-hidden="true"></span><span>Feb 28, 2026</span></div>
+          </a>
+          <a class="post reveal" href="#blog">
+            <div class="post__img"><img src="https://framerusercontent.com/images/5rGlW7xtbsUz4PnBAtaaAwvqGmk.jpg?width=1925&height=1450" alt="" loading="lazy" /></div>
+            <h6>Building Trust in AI Outputs: Why Source Attribution Matters</h6>
+            <div class="post__meta"><span>Guide</span><span class="dot" aria-hidden="true"></span><span>Feb 21, 2026</span></div>
+          </a>
+          <a class="post reveal" href="#blog">
+            <div class="post__img"><img src="https://framerusercontent.com/images/H40PuKTldmX1NVNoe6kCxmD1bo.jpg?width=1925&height=1450" alt="" loading="lazy" /></div>
+            <h6>From Support Tickets to Resolved Issues in Under Two Minutes</h6>
+            <div class="post__meta"><span>Product</span><span class="dot" aria-hidden="true"></span><span>Feb 14, 2026</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section cta" id="cta">
+      <img class="cta__hills" src="https://framerusercontent.com/images/KEyElslPaeEXTKlix9xtVlt4.png?width=1600&height=349" alt="" aria-hidden="true" />
+      <div class="container cta__grid">
+        <div class="cta__lockup">
+          <h2 class="section-title reveal">Get started today</h2>
+          <p class="section-lead reveal">Nexora is easy to set up, maintain, and use. It takes less than 5 minutes to get up and running.</p>
+          <a class="btn btn--primary reveal" href="mailto:hello@nexora.ai">Get a demo</a>
+          <div class="cta__badges reveal">
+            <span class="cta__badge">GDPR</span>
+            <span class="cta__badge">SOC 2</span>
+          </div>
+        </div>
+        <div class="cta__chat reveal">
+          <div class="chat chat--flat">
+            <div class="chat__head">
+              <h4 class="chat__welcome">Welcome back</h4>
+              <p class="chat__hint">How can I help you today, Alex?</p>
+            </div>
+            <div class="chat__input">
+              <p>Ask anything. Type @ for mentions and / for shortcuts.</p>
+              <div class="chat__input-bar"><div class="chat__icons"><span class="ci ci--paperclip"></span><span class="ci ci--mic"></span><span class="ci ci--send"></span></div></div>
+            </div>
+            <div class="chat__body">
+              <div class="chat__tabs">
+                <button class="chat__tab is-active">Research</button>
+                <button class="chat__tab">Support Ops</button>
+                <button class="chat__tab">Writing</button>
+              </div>
+              <ul class="chat__suggestions">
+                <li>Summarize our product in simple terms for new users <span aria-hidden="true">↗</span></li>
+                <li>Draft a friendly support reply using our help docs <span aria-hidden="true">↗</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <script type="module" src="main.js"></script>
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span>Nexora</span>
+      </div>
+      <nav class="site-foot__nav">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#blog">Blog</a>
+        <a href="mailto:hello@nexora.ai">Contact</a>
+      </nav>
+      <p class="site-foot__copy">© 2026 Nexora. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>

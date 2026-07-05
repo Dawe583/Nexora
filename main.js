@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   NEXORA — interactions
+   NEXORA — interakce (CZ)
    ═══════════════════════════════════════════════════════════ */
 (function () {
   "use strict";
@@ -27,7 +27,7 @@
     io.observe(el);
   });
 
-  /* ── Word-by-word scrub text ── */
+  /* ── Postupné rozsvěcování slov ── */
   document.querySelectorAll(".scrub-text").forEach((p) => {
     const words = p.textContent.trim().split(/\s+/);
     p.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(" ");
@@ -43,15 +43,15 @@
   litWords();
   window.addEventListener("scroll", litWords, { passive: true });
 
-  /* ── Features showcase ── */
+  /* ── Showcase funkcí ── */
   const scTabs = document.querySelectorAll(".showcase__tab");
   const scImgs = document.querySelectorAll(".showcase__img");
   const scCap = document.querySelector(".showcase__cap");
   const caps = [
-    "Start with a question and move faster from the first prompt.",
-    "Verify every answer with linked sources and full context.",
-    "Execute the next step — tickets, replies, and drafts in one flow.",
-    "Measure what's working with trends, gaps, and clear signals.",
+    "Začněte otázkou a postupujte rychleji už od prvního promptu.",
+    "Ověřte každou odpověď díky odkazům na zdroje a plnému kontextu.",
+    "Proveďte další krok — tickety, odpovědi a návrhy v jednom toku.",
+    "Měřte, co funguje — trendy, mezery a jasné signály.",
   ];
   let scI = 0,
     scTimer;
@@ -79,37 +79,43 @@
   );
   if (scImgs.length) autoShow();
 
-  /* ── Pricing toggle ── */
-  const priceBtns = document.querySelectorAll(".price-toggle button");
-  const amounts = document.querySelectorAll(".plan__amount[data-month]");
-  priceBtns.forEach((b) =>
-    b.addEventListener("click", () => {
-      priceBtns.forEach((x) => x.classList.remove("is-active"));
-      b.classList.add("is-active");
-      const cyc = b.dataset.cycle;
-      amounts.forEach((a) => {
-        a.textContent = "$" + a.dataset[cyc];
-      });
-    })
-  );
+  /* ── Ceník: přepínač Ročně/Měsíčně na kartě ── */
+  document.querySelectorAll(".cycle__switch").forEach((sw) => {
+    const card = sw.closest(".plan");
+    const amount = card.querySelector(".plan__amount[data-month]");
+    const label = sw.parentElement.querySelector(".cycle__label");
+    const toggle = () => {
+      const yearly = sw.getAttribute("aria-checked") !== "true";
+      sw.setAttribute("aria-checked", String(yearly));
+      if (label) label.textContent = yearly ? "Ročně" : "Měsíčně";
+      if (amount) amount.textContent = "$" + amount.dataset[yearly ? "year" : "month"];
+    };
+    sw.addEventListener("click", toggle);
+    sw.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
 
   /* ── FAQ ── */
   const faqData = {
     general: [
-      ["What is Nexora and how does it work?", "Nexora is an AI agent that connects to your existing docs and tools to deliver verified answers, draft responses, and trigger actions directly from a chat interface. Ask a question, get a sourced answer, and execute next steps without switching tabs."],
-      ["How long does it take to set up?", "Most teams are up and running in under five minutes. Connect your data sources, invite your team, and Nexora starts indexing immediately. No engineering resources required."],
-      ["Do I need technical knowledge to use Nexora?", "No. Nexora is designed for operators, support leads, and sales teams. The interface is conversational, and connecting integrations takes a few clicks."],
-      ["Is there a free plan available?", "Nexora offers a free tier with limited integrations and message volume so you can evaluate the product before committing. No credit card required."],
+      ["Co je Nexora a jak funguje?", "Nexora je AI agent, který se připojí k vašim stávajícím dokumentům a nástrojům a dodává ověřené odpovědi, návrhy reakcí a spouští akce přímo z chatovacího rozhraní. Položíte otázku, dostanete odpověď se zdrojem a provedete další kroky bez přepínání záložek."],
+      ["Jak dlouho trvá nastavení?", "Většina týmů je připravena za méně než pět minut. Připojíte zdroje dat, pozvete tým a Nexora začne okamžitě indexovat. Bez nutnosti vývojářů."],
+      ["Potřebuji technické znalosti?", "Ne. Nexora je navržená pro operations, vedoucí podpory i obchodní týmy. Rozhraní je konverzační a připojení integrací zabere pár kliknutí."],
+      ["Existuje bezplatný plán?", "Ano — bezplatná úroveň s omezeným počtem integrací a zpráv, abyste si produkt vyzkoušeli bez závazků. Platební karta není potřeba."],
     ],
     ai: [
-      ["Which models does Nexora use?", "Nexora routes each request to the best available model for the task and keeps context across threads, so answers stay consistent and grounded in your own sources."],
-      ["How does Nexora avoid hallucinations?", "Every response links to the exact source it pulled from. When sources conflict, Nexora flags it instead of guessing — so your team can make the call."],
-      ["Can it take actions, not just answer?", "Yes. Nexora turns prompts into tickets, replies, drafts, and next steps, and can execute them inside your connected tools with approval gates where needed."],
+      ["Jaké modely Nexora používá?", "Nexora směruje každý požadavek na nejvhodnější dostupný model a drží kontext napříč vlákny, takže odpovědi zůstávají konzistentní a opřené o vaše vlastní zdroje."],
+      ["Jak se Nexora vyhýbá halucinacím?", "Každá odpověď odkazuje na přesný zdroj, ze kterého vychází. Když si zdroje odporují, Nexora to označí místo hádání — rozhodnutí zůstává na vašem týmu."],
+      ["Umí i konat, nejen odpovídat?", "Ano. Nexora mění prompty v tickety, odpovědi, návrhy a další kroky a umí je provést v propojených nástrojích — se schvalovací bránou tam, kde je to potřeba."],
     ],
     sec: [
-      ["What tools does Nexora integrate with?", "Nexora plugs into your docs, CRM, help center, and support stack. Source connect, action runner, approval gate, and audit are all built in."],
-      ["How is my data protected?", "Nexora is GDPR-ready and SOC 2 aligned. Granular role-based access controls who can connect sources, trigger actions, and manage billing."],
-      ["Can I control which actions require approval?", "Yes. Approval gates let you require sign-off for sensitive actions, and every change is logged with a full audit trail."],
+      ["S jakými nástroji se Nexora integruje?", "Nexora se napojí na dokumenty, CRM, help centrum i support stack. Připojení zdrojů, spouštění akcí, schvalovací brána a audit jsou součástí platformy."],
+      ["Jak jsou chráněna moje data?", "Nexora je připravená na GDPR a v souladu se SOC 2. Granulární role řídí, kdo může připojovat zdroje, spouštět akce a spravovat fakturaci."],
+      ["Mohu určit, které akce vyžadují schválení?", "Ano. Schvalovací brány vynutí potvrzení u citlivých akcí a každá změna se loguje s kompletní auditní stopou."],
     ],
   };
   const faqList = document.getElementById("faqList");
@@ -119,7 +125,7 @@
       const item = document.createElement("div");
       item.className = "faq-item" + (i === 0 ? " open" : "");
       item.innerHTML =
-        `<button class="faq-item__q">${q}<span aria-hidden="true">⌄</span></button>` +
+        `<button class="faq-item__q">${q}<span aria-hidden="true">⌃</span></button>` +
         `<div class="faq-item__a"><p>${a}</p></div>`;
       const ans = item.querySelector(".faq-item__a");
       item.querySelector(".faq-item__q").addEventListener("click", () => {
@@ -139,8 +145,8 @@
   );
   renderFaq("general");
 
-  /* ── Chat mockup tabs (cosmetic) ── */
-  document.querySelectorAll(".chat__tabs").forEach((tabs) => {
+  /* ── Chat mockup taby (kosmetické) ── */
+  document.querySelectorAll(".chat__tabs-row").forEach((tabs) => {
     tabs.querySelectorAll(".chat__tab").forEach((t) =>
       t.addEventListener("click", () => {
         tabs.querySelectorAll(".chat__tab").forEach((x) => x.classList.remove("is-active"));
@@ -149,27 +155,29 @@
     );
   });
 
-  /* ── Testimonials carousel ── */
+  /* ── Reference (karusel) ── */
   const quotes = [
-    ["We cut our average ticket resolution time from 12 minutes to under 3. Nexora pulls the right answer from our docs before our agents even finish reading the ticket.", "Sarah Chen", "Head of Support, Layerform", "https://framerusercontent.com/images/2uayq1aC9XZcwLgTTRK6M2ok8KE.jpg?width=1450&height=1925"],
-    ["Nexora became our single source of truth. New hires ramp in days, not weeks, because every answer comes with the source attached.", "Marcus Reid", "Director of Ops, Northwind", "https://framerusercontent.com/images/8PPauCURBfmckfonpgSJY9NbDQ.jpg?width=1450&height=1925"],
-    ["The action runner is the difference. Our team goes from question to a filed ticket in one flow — no tab switching, no copy-paste.", "Priya Sharma", "VP Success, Cobalt", "https://framerusercontent.com/images/6qMq4KZghjDbviFxb8hhxGW0fT0.jpg?width=1450&height=1925"],
+    ["Průměrnou dobu vyřešení ticketu jsme zkrátili z 12 minut pod 3. Nexora najde správnou odpověď v naší dokumentaci dřív, než agent dočte ticket.", "Sarah Chen", "Vedoucí podpory, Layerform", "https://framerusercontent.com/images/2uayq1aC9XZcwLgTTRK6M2ok8KE.jpg?width=1450&height=1925"],
+    ["Nexora se stala naším jediným zdrojem pravdy. Nováčci se zapracují za dny, ne týdny, protože každá odpověď má u sebe zdroj.", "Marcus Reid", "Ředitel provozu, Northwind", "https://framerusercontent.com/images/8PPauCURBfmckfonpgSJY9NbDQ.jpg?width=1450&height=1925"],
+    ["Rozdíl dělá spouštění akcí. Tým se dostane od otázky k založenému ticketu v jednom toku — bez přepínání záložek a kopírování.", "Priya Sharma", "VP Success, Cobalt", "https://framerusercontent.com/images/6qMq4KZghjDbviFxb8hhxGW0fT0.jpg?width=1450&height=1925"],
+    ["Odkazy na zdroje změnily, jak lidé AI důvěřují. Nikdo už neřeší, odkud odpověď je — jednoduše na ni klikne a vidí ji v kontextu.", "Tomáš Krejčí", "Ředitel produktu, Meridian", "https://framerusercontent.com/images/PahuPLrBYO2JdmGOgzCORNG7Q.jpg?width=1450&height=1925"],
+    ["Schvalovací brány nám daly odvahu pustit AI k reálným akcím. Citlivé kroky projdou kontrolou a všechno zůstává v auditní stopě.", "Aiko Tanaka", "Vedoucí provozu, Aperture", "https://framerusercontent.com/images/pepH1APN2yML7ExisXYWgAZwSH0.jpg?width=1450&height=1925"],
   ];
   const qText = document.getElementById("quoteText"),
     qName = document.getElementById("quoteName"),
     qRole = document.getElementById("quoteRole"),
     qImg = document.getElementById("quoteImg"),
     qDots = document.getElementById("quoteDots");
-  let qI = 0;
+  let qI = 0,
+    qTimer;
   quotes.forEach((_, i) => {
     const d = document.createElement("button");
-    d.className = "q-dot" + (i === 0 ? " is-active" : "");
-    d.setAttribute("aria-label", "Testimonial " + (i + 1));
+    if (i === 0) d.className = "is-active";
+    d.setAttribute("aria-label", "Reference " + (i + 1));
     d.addEventListener("click", () => setQuote(i, true));
     qDots.appendChild(d);
   });
   const qDotEls = qDots.querySelectorAll("button");
-  let qTimer;
   function setQuote(i, manual) {
     qI = (i + quotes.length) % quotes.length;
     const [t, n, r, im] = quotes[qI];
@@ -184,13 +192,12 @@
     clearInterval(qTimer);
     qTimer = setInterval(() => setQuote(qI + 1), 6000);
   }
-  qDotEls.forEach((d) => d.classList.add("is-active") && 0);
-  qDots.querySelectorAll(".q-dot").forEach((d) => (d.className = "is-active"));
-  // normalize dot styling to match CSS (.quote__dots button)
-  qDots.querySelectorAll("button").forEach((d, i) => (d.className = i === 0 ? "is-active" : ""));
+  document.querySelectorAll(".quote__nav .icon-btn").forEach((b) =>
+    b.addEventListener("click", () => setQuote(qI + Number(b.dataset.q), true))
+  );
   resetQTimer();
 
-  /* ── Hero parallax on hills ── */
+  /* ── Hero parallax kopců ── */
   const far = document.querySelector(".hero__hills--far");
   const mid = document.querySelector(".hero__hills--mid");
   window.addEventListener(
@@ -204,4 +211,16 @@
     },
     { passive: true }
   );
+
+  /* ── CTA formulář (demo) ── */
+  const form = document.querySelector(".cta__form");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const btn = form.querySelector("button");
+      btn.textContent = "Odesláno ✓";
+      form.reset();
+      setTimeout(() => (btn.textContent = "Odeslat"), 3000);
+    });
+  }
 })();

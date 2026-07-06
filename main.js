@@ -4,8 +4,9 @@
 (function () {
   "use strict";
 
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const fine = window.matchMedia("(pointer: fine)").matches;
+  /* Efekty běží na VŠECH zařízeních bez výjimky (dotyk, myš, i reduced-motion). */
+  const reduce = false;
+  const fine = true;
   const raf = (fn) => requestAnimationFrame(fn);
 
   /* ─────────────────────────────────────────────
@@ -17,6 +18,7 @@
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      syncTouch: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.6,
     });
@@ -155,51 +157,54 @@
      CURSOR GLOW na kartách
   ───────────────────────────────────────────── */
   const GLOW = ".why-card,.plan,.post,.faq-item,.stack-card,.quote,.showcase,.log__media,.int-row,.faq__card,.chat";
-  if (fine) {
-    document.addEventListener(
-      "mousemove",
-      (e) => {
-        const card = e.target.closest(GLOW);
-        if (!card) return;
-        const r = card.getBoundingClientRect();
-        card.style.setProperty("--mx", e.clientX - r.left + "px");
-        card.style.setProperty("--my", e.clientY - r.top + "px");
-      },
-      { passive: true }
-    );
-  }
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      const card = e.target.closest(GLOW);
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", e.clientX - r.left + "px");
+      card.style.setProperty("--my", e.clientY - r.top + "px");
+      if (e.pointerType !== "mouse") card.classList.add("lit-card");
+    },
+    { passive: true }
+  );
+  const clearLit = () => document.querySelectorAll(".lit-card").forEach((c) => c.classList.remove("lit-card"));
+  document.addEventListener("pointerup", clearLit, { passive: true });
+  document.addEventListener("pointercancel", clearLit, { passive: true });
 
   /* ─────────────────────────────────────────────
      MAGNETICKÁ TLAČÍTKA
   ───────────────────────────────────────────── */
-  if (fine && !reduce) {
-    document.querySelectorAll(".btn--primary,.btn--play,.icon-btn,.ticker-chip__arrow,.sug-arrow").forEach((el) => {
-      let rq = null;
-      el.style.transition = "transform .25s var(--ease)";
-      el.addEventListener("mousemove", (e) => {
-        const r = el.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2;
-        const y = e.clientY - r.top - r.height / 2;
-        if (rq) cancelAnimationFrame(rq);
-        rq = raf(() => (el.style.transform = `translate(${x * 0.32}px, ${y * 0.42}px)`));
-      });
-      el.addEventListener("mouseleave", () => {
-        if (rq) cancelAnimationFrame(rq);
-        el.style.transform = "";
-      });
+  document.querySelectorAll(".btn--primary,.btn--play,.icon-btn,.ticker-chip__arrow,.sug-arrow").forEach((el) => {
+    let rq = null;
+    el.style.transition = "transform .25s var(--ease)";
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      if (rq) cancelAnimationFrame(rq);
+      rq = raf(() => (el.style.transform = `translate(${x * 0.32}px, ${y * 0.42}px)`));
     });
-  }
+    const reset = () => {
+      if (rq) cancelAnimationFrame(rq);
+      el.style.transform = "";
+    };
+    el.addEventListener("pointerleave", reset);
+    el.addEventListener("pointercancel", reset);
+    el.addEventListener("pointerup", reset);
+  });
 
   /* ─────────────────────────────────────────────
      TILT chat panelu v hero
   ───────────────────────────────────────────── */
   const heroChat = document.querySelector(".hero .chat");
   const hero = document.querySelector(".hero");
-  if (heroChat && hero && fine && !reduce) {
+  if (heroChat && hero) {
     let done = false;
     setTimeout(() => (done = true), 1400);
     let rq = null;
-    hero.addEventListener("mousemove", (e) => {
+    hero.addEventListener("pointermove", (e) => {
       if (!done) return;
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
@@ -208,9 +213,9 @@
       if (rq) cancelAnimationFrame(rq);
       rq = raf(() => (heroChat.style.transform = `perspective(1200px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`));
     });
-    hero.addEventListener("mouseleave", () => {
-      heroChat.style.transform = "perspective(1200px) rotateX(0) rotateY(0)";
-    });
+    const level = () => (heroChat.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg)");
+    hero.addEventListener("pointerleave", level);
+    hero.addEventListener("pointercancel", level);
   }
 
   /* ─────────────────────────────────────────────

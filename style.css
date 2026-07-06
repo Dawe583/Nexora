@@ -58,7 +58,6 @@ button{cursor:pointer;border:none;background:none}
 /* ─── Reveal ─── */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
 /* ─── Buttons ─── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -433,7 +432,8 @@ button{cursor:pointer;border:none;background:none}
   opacity:0;transition:opacity .5s var(--ease);mix-blend-mode:screen;
   background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),rgba(255,240,235,.16),transparent 62%)}
 .why-card:hover::after,.plan:hover::after,.post:hover::after,.faq-item:hover::after,.stack-card:hover::after,
-.quote:hover::after,.showcase:hover::after,.log__media:hover::after,.int-row:hover::after,.faq__card:hover::after,.chat:hover::after{opacity:1}
+.quote:hover::after,.showcase:hover::after,.log__media:hover::after,.int-row:hover::after,.faq__card:hover::after,.chat:hover::after,
+.lit-card::after{opacity:1}
 
 /* Hero title — vyjíždění slov */
 .hero__title.split.reveal{opacity:1;transform:none}
@@ -475,8 +475,14 @@ button{cursor:pointer;border:none;background:none}
 .orbit__core{animation:corePulse 4s ease-in-out infinite}
 @keyframes corePulse{0%,100%{box-shadow:0 0 44px rgba(255,243,240,.10)}50%{box-shadow:0 0 66px rgba(255,243,240,.22)}}
 
+/* Efekty běží na všech zařízeních — na malých displejích jen lehčí blur orbů kvůli plynulosti */
+@media (max-width:640px){
+  .fx-orb{filter:blur(70px)}
+  .fx-orb--1{width:360px;height:360px}
+  .fx-orb--2{width:420px;height:420px}
+  .fx-orb--3{width:320px;height:320px}
+}
+/* Ctí uživatele s reduced-motion pouze u náběhových přechodů, ambient animace běží dál */
 @media (prefers-reduced-motion:reduce){
-  .fx-orb,.showcase__img.is-active,.chip__dot,.orbit__core,.orbit,.logos__track,.ticker-chip__track{animation:none!important}
-  .hw>span{transform:none;opacity:1}
-  .scroll-prog{display:none}
+  .reveal{transition-duration:.4s}
 }

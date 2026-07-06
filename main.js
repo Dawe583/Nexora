@@ -4,26 +4,23 @@
 (function () {
   "use strict";
 
-  /* Efekty se přizpůsobí zařízení: na dotykových displejích scrolluje nativní
-     prohlížeč (žádné hijackování prstu), jen na myši běží smooth scroll a
-     kurzorové efekty. Ctíme také prefers-reduced-motion. */
-  const mq = (q) => window.matchMedia && window.matchMedia(q).matches;
-  const reduce = mq("(prefers-reduced-motion:reduce)");
-  const coarse = mq("(pointer:coarse)") || mq("(hover:none)");
-  const fine = !coarse && !mq("(pointer:none)");
+  /* Efekty běží na VŠECH zařízeních bez výjimky (dotyk, myš, i reduced-motion). */
+  const reduce = false;
+  const fine = true;
   const raf = (fn) => requestAnimationFrame(fn);
 
   /* ─────────────────────────────────────────────
-     LENIS SMOOTH SCROLL — jen na myši, nikdy na dotyku
-     (na mobilu = nativní scroll, aby nebyl přehnaně agresivní)
+     LENIS SMOOTH SCROLL — na všech zařízeních (myš i dotyk)
+     Dotyk sleduje prst 1:1 (touchMultiplier 1), takže je plynulý,
+     ne přehnaně agresivní jako dřív (1.6).
   ───────────────────────────────────────────── */
   let lenis = null;
-  if (window.Lenis && !reduce && !coarse) {
+  if (window.Lenis) {
     lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      syncTouch: false,
+      syncTouch: true,
       wheelMultiplier: 1,
       touchMultiplier: 1,
     });
@@ -201,7 +198,7 @@
     }
     /* nejdřív všechna čtení rektů, pak všechny zápisy transformů */
     const writes = [];
-    if (!coarse) for (const im of pImgs) {
+    for (const im of pImgs) {
       const r = im.getBoundingClientRect();
       if (r.bottom < -200 || r.top > vh + 200) continue;
       const off = r.top + r.height / 2 - vh / 2;
@@ -232,25 +229,26 @@
      CURSOR GLOW na kartách
   ───────────────────────────────────────────── */
   const GLOW = ".why-card,.plan,.post,.faq-item,.stack-card,.quote,.showcase,.log__media,.int-row,.faq__card,.chat";
-  if (fine) {
-    document.addEventListener(
-      "pointermove",
-      (e) => {
-        if (e.pointerType && e.pointerType !== "mouse") return;
-        const card = e.target.closest(GLOW);
-        if (!card) return;
-        const r = card.getBoundingClientRect();
-        card.style.setProperty("--mx", e.clientX - r.left + "px");
-        card.style.setProperty("--my", e.clientY - r.top + "px");
-      },
-      { passive: true }
-    );
-  }
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      const card = e.target.closest(GLOW);
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", e.clientX - r.left + "px");
+      card.style.setProperty("--my", e.clientY - r.top + "px");
+      if (e.pointerType !== "mouse") card.classList.add("lit-card");
+    },
+    { passive: true }
+  );
+  const clearLit = () => document.querySelectorAll(".lit-card").forEach((c) => c.classList.remove("lit-card"));
+  document.addEventListener("pointerup", clearLit, { passive: true });
+  document.addEventListener("pointercancel", clearLit, { passive: true });
 
   /* ─────────────────────────────────────────────
      MAGNETICKÁ TLAČÍTKA
   ───────────────────────────────────────────── */
-  if (fine && !reduce) document.querySelectorAll(".btn--primary,.btn--play,.icon-btn,.ticker-chip__arrow,.sug-arrow").forEach((el) => {
+  document.querySelectorAll(".btn--primary,.btn--play,.icon-btn,.ticker-chip__arrow,.sug-arrow").forEach((el) => {
     let rq = null;
     el.style.transition = "transform .25s var(--ease)";
     el.addEventListener("pointermove", (e) => {
@@ -274,7 +272,7 @@
   ───────────────────────────────────────────── */
   const heroChat = document.querySelector(".hero .chat");
   const hero = document.querySelector(".hero");
-  if (heroChat && hero && fine && !reduce) {
+  if (heroChat && hero) {
     let done = false;
     setTimeout(() => (done = true), 1400);
     let rq = null;
@@ -545,7 +543,7 @@
   /* ─────────────────────────────────────────────
      BLOG — 3D tilt karet
   ───────────────────────────────────────────── */
-  if (fine && !reduce) document.querySelectorAll(".post").forEach((card) => {
+  document.querySelectorAll(".post").forEach((card) => {
     let rq = null;
     card.addEventListener("pointermove", (e) => {
       const r = card.getBoundingClientRect();
@@ -566,7 +564,6 @@
      VELOCITY SKEW — jemné zkosení podle rychlosti scrollu
   ───────────────────────────────────────────── */
   (function vskew() {
-    if (reduce || coarse) return;
     const target = document.querySelector("main");
     if (!target) return;
     let prev = scrollY();

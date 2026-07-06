@@ -15,6 +15,7 @@
 <body>
 <div class="scroll-prog" id="scrollProg" aria-hidden="true"></div>
 <div class="fx-orbs" aria-hidden="true"><span class="fx-orb fx-orb--1"></span><span class="fx-orb fx-orb--2"></span><span class="fx-orb fx-orb--3"></span></div>
+<div class="fx-noise" aria-hidden="true"></div>
 <div class="page">
 
   <!-- ============ HEADER ============ -->
@@ -36,6 +37,8 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero__sky" aria-hidden="true"></div>
+      <div class="hero__stars" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="hero__mist" aria-hidden="true"></div>
       <img class="hero__hills hero__hills--far" src="https://framerusercontent.com/images/h5VHoQg2qBhfygdenEQ0WUtEZU.png?width=2464&height=909" alt="" aria-hidden="true" />
       <img class="hero__hills hero__hills--mid" src="https://framerusercontent.com/images/T6hTfVKiQ81oLHCljxjb0WPLHY8.png?width=2464&height=848" alt="" aria-hidden="true" />
 
@@ -66,8 +69,9 @@
           <h4 class="chat__welcome">Vítejte zpět</h4>
           <p class="chat__hint">S čím vám dnes mohu pomoci, Alexi?</p>
         </div>
+        <div class="chat__convo" aria-live="polite"></div>
         <div class="chat__input">
-          <p>Zeptejte se na cokoli. Napište @ pro zmínky a / pro zkratky.</p>
+          <p class="chat__ph"><span class="ph-text">Zeptejte se na cokoli. Napište @ pro zmínky a / pro zkratky.</span><span class="caret" aria-hidden="true"></span></p>
           <div class="chat__input-bar">
             <div class="chat__icons chat__icons--left">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8 L9.8 16.3 C7.6 18.6 3.9 18.6 1.7 16.3 C-0.6 14 -0.6 10.3 1.7 8 L8.5 1.1 C10 -0.4 12.4 -0.4 13.9 1.1 C15.4 2.7 15.4 5.1 13.9 6.6 L7.1 13.5 C6.4 14.3 5.2 14.3 4.4 13.5 C3.7 12.8 3.7 11.5 4.4 10.8 L11.2 3.9" transform="translate(3 3)"/></svg>
@@ -144,6 +148,7 @@
             <img class="showcase__img" data-i="1" src="https://framerusercontent.com/images/v9Yr4trFZsygSFKIZye6oMUY4.jpg?width=2500&height=1406" alt="Odpověď AI s panelem citovaných zdrojů" />
             <img class="showcase__img" data-i="2" src="https://framerusercontent.com/images/hg3Tg24LlqTuZEp7hHXSGwPQ9U.jpg?width=2500&height=1406" alt="Vytvoření ticketu se schvalovacím krokem" />
             <img class="showcase__img" data-i="3" src="https://framerusercontent.com/images/eFufq0tptTi9Qq7gFHic5a5E.jpg?width=2500&height=1406" alt="Analytický dashboard podpory" />
+            <span class="brandfix" aria-hidden="true">Nexora Pro</span>
           </div>
           <div class="showcase__foot">
             <p class="showcase__cap" data-i="0">Začněte otázkou a postupujte rychleji už od prvního promptu.</p>
@@ -169,27 +174,84 @@
 
         <div class="why__row reveal">
           <article class="why-card">
-            <div class="why-card__art why-card__art--a" aria-hidden="true"></div>
+            <div class="why-card__art" aria-hidden="true">
+              <svg class="art art--a" viewBox="0 0 320 200">
+                <line class="ln beam bm1" x1="82" y1="58" x2="146" y2="94"/>
+                <line class="ln beam bm2" x1="82" y1="142" x2="146" y2="106"/>
+                <line class="ln beam bm3" x1="238" y1="58" x2="174" y2="94"/>
+                <line class="ln beam bm4" x1="238" y1="142" x2="174" y2="106"/>
+                <g class="node fl1"><rect class="ln fill1" x="56" y="38" width="34" height="40" rx="6"/><line class="ln" x1="64" y1="50" x2="82" y2="50"/><line class="ln" x1="64" y1="58" x2="82" y2="58"/><line class="ln" x1="64" y1="66" x2="76" y2="66"/></g>
+                <g class="node fl2"><ellipse class="ln fill1" cx="72" cy="132" rx="17" ry="6"/><path class="ln fill1" d="M55 132 v20 c0 3.3 7.6 6 17 6 s17-2.7 17-6 v-20"/><path class="ln" d="M55 142 c0 3.3 7.6 6 17 6 s17-2.7 17-6"/></g>
+                <g class="node fl3"><path class="ln fill1" d="M222 40 h36 a6 6 0 0 1 6 6 v18 a6 6 0 0 1 -6 6 h-22 l-8 8 v-8 h-6 a6 6 0 0 1 -6-6 v-18 a6 6 0 0 1 6-6 z"/><line class="ln" x1="228" y1="52" x2="256" y2="52"/><line class="ln" x1="228" y1="60" x2="248" y2="60"/></g>
+                <g class="node fl4"><circle class="ln fill1" cx="240" cy="140" r="15"/><circle class="ln" cx="240" cy="140" r="5"/><line class="ln" x1="240" y1="119" x2="240" y2="125"/><line class="ln" x1="240" y1="155" x2="240" y2="161"/><line class="ln" x1="219" y1="140" x2="225" y2="140"/><line class="ln" x1="255" y1="140" x2="261" y2="140"/></g>
+                <circle class="ln ring" cx="160" cy="100" r="24"/>
+                <path class="gemp" d="M160 82 L178 100 L160 118 L142 100 Z"/>
+                <path class="gemp gemp--in" d="M160 92 L168 100 L160 108 L152 100 Z"/>
+              </svg>
+            </div>
             <h3>Sdílený kontext</h3>
             <p>Dokumenty, nástroje a znalosti týmu na jednom místě.</p>
           </article>
           <article class="why-card">
-            <div class="why-card__art why-card__art--b" aria-hidden="true"></div>
+            <div class="why-card__art" aria-hidden="true">
+              <svg class="art art--b" viewBox="0 0 320 200">
+                <path class="ln fill1 drawloop" d="M84 34 h152 a16 16 0 0 1 16 16 v58 a16 16 0 0 1 -16 16 h-118 l-20 18 v-18 h-14 a16 16 0 0 1 -16-16 v-58 a16 16 0 0 1 16-16 z"/>
+                <path class="ln chk" d="M132 80 l18 18 l38 -40"/>
+                <g class="chip c1"><rect class="ln fill2" x="76" y="152" width="86" height="24" rx="12"/><circle class="dotf" cx="92" cy="164" r="3.4"/><line class="ln" x1="102" y1="164" x2="148" y2="164"/></g>
+                <g class="chip c2"><rect class="ln fill2" x="172" y="152" width="72" height="24" rx="12"/><circle class="dotf" cx="188" cy="164" r="3.4"/><line class="ln" x1="198" y1="164" x2="230" y2="164"/></g>
+              </svg>
+            </div>
             <h3>Ověřené odpovědi</h3>
             <p>Jasné odpovědi se zdroji a užitečným kontextem.</p>
           </article>
           <article class="why-card">
-            <div class="why-card__art why-card__art--c" aria-hidden="true"></div>
+            <div class="why-card__art" aria-hidden="true">
+              <svg class="art art--c" viewBox="0 0 320 200">
+                <path class="ln bolt" d="M84 96 l16 -44 h26 l-12 30 h22 l-44 66 l12 -44 z"/>
+                <circle class="spark s1" cx="70" cy="52" r="2.4"/>
+                <circle class="spark s2" cx="140" cy="42" r="2"/>
+                <circle class="spark s3" cx="66" cy="120" r="2"/>
+                <path class="ln beam arrw" d="M148 100 C 176 100 176 100 200 100"/>
+                <path class="ln arrh" d="M194 93 l9 7 l-9 7"/>
+                <g class="ticket">
+                  <rect class="ln fill1" x="212" y="66" width="76" height="64" rx="9"/>
+                  <line class="ln" x1="224" y1="84" x2="266" y2="84"/>
+                  <line class="ln" x1="224" y1="98" x2="276" y2="98"/>
+                  <line class="ln" x1="224" y1="112" x2="256" y2="112"/>
+                  <circle class="dotf tick-dot" cx="276" cy="116" r="4"/>
+                </g>
+              </svg>
+            </div>
             <h3>Okamžitá akce</h3>
             <p>Z promptů rovnou tickety, odpovědi, návrhy a další kroky.</p>
           </article>
           <article class="why-card">
-            <div class="why-card__art why-card__art--d" aria-hidden="true"></div>
+            <div class="why-card__art" aria-hidden="true">
+              <svg class="art art--d" viewBox="0 0 320 200">
+                <path class="ln fill1 shield" d="M160 26 l58 20 v44 c0 38 -26 62 -58 76 c-32 -14 -58 -38 -58 -76 v-44 z"/>
+                <path class="orbdash" d="M160 14 a92 92 0 0 1 0 184 a92 92 0 0 1 0 -184" />
+                <rect class="ln fill2" x="132" y="88" width="56" height="26" rx="13"/>
+                <circle class="knob" cx="145" cy="101" r="9"/>
+                <path class="ln chk chk2" d="M146 138 l10 10 l20 -22"/>
+              </svg>
+            </div>
             <h3>Vestavěná kontrola</h3>
             <p>Práce v souladu s pravidly, přístupy a schvalováním.</p>
           </article>
           <article class="why-card">
-            <div class="why-card__art why-card__art--e" aria-hidden="true"></div>
+            <div class="why-card__art" aria-hidden="true">
+              <svg class="art art--e" viewBox="0 0 320 200">
+                <line class="ln ax" x1="58" y1="170" x2="272" y2="170"/>
+                <line class="ln ax" x1="58" y1="170" x2="58" y2="34"/>
+                <rect class="bar b1" x="76" y="118" width="22" height="52" rx="3"/>
+                <rect class="bar b2" x="114" y="96" width="22" height="74" rx="3"/>
+                <rect class="bar b3" x="152" y="128" width="22" height="42" rx="3"/>
+                <rect class="bar b4" x="190" y="76" width="22" height="94" rx="3"/>
+                <rect class="bar b5" x="228" y="56" width="22" height="114" rx="3"/>
+                <polyline class="ln spark-line" points="87,104 125,84 163,112 201,62 239,44"/>
+                <circle class="dotf pulse-dot" cx="239" cy="44" r="4.5"/>
+              </svg>
+            </div>
             <h3>Průběžný přehled</h3>
             <p>Vzorce, mezery a příležitosti ke zlepšení — rychleji.</p>
           </article>
@@ -252,9 +314,11 @@
     <section class="section integrations" id="integrations">
       <div class="container integrations__grid">
         <div class="integrations__orbit" aria-hidden="true">
-          <div class="orbit orbit--1"><span></span><span></span><span></span><span></span></div>
-          <div class="orbit orbit--2"><span></span><span></span><span></span><span></span></div>
-          <div class="orbit orbit--3"><span></span><span></span><span></span></div>
+          <div class="orbit__sweep"></div>
+          <div class="orbit orbit--1"><span class="og og--mail"></span><span class="og og--cal"></span><span class="og og--db"></span><span class="og og--chat"></span></div>
+          <div class="orbit orbit--2"><span class="og og--doc"></span><span class="og og--gear"></span><span class="og og--bolt"></span><span class="og og--card"></span></div>
+          <div class="orbit orbit--3"><span class="og og--check"></span><span class="og og--pin"></span><span class="og og--bell"></span></div>
+          <div class="orbit__comet"></div>
           <div class="orbit__core"><span class="gem gem--core" aria-hidden="true"></span></div>
         </div>
         <div class="integrations__body">
@@ -282,19 +346,21 @@
           <a class="link-arrow reveal" href="#changelog">Všechny novinky →</a>
         </div>
 
-        <div class="log">
-          <article class="log__item reveal">
+        <div class="log log--stack" id="logStack">
+          <article class="log__item" style="--i:0">
+            <div class="log__veil" aria-hidden="true"></div>
             <div class="log__side">
               <span class="log__rail" aria-hidden="true"></span>
               <time datetime="2026-03-23"><span class="log__dot" aria-hidden="true"></span>23. 3. 2026</time>
             </div>
             <div class="log__main">
               <h3>Uložené odpovědi a kolekce</h3>
-              <div class="log__media"><img src="https://framerusercontent.com/images/ZCUolRzdTgZF2qcr3flePPx2dk.jpg?width=2500&height=1406" alt="Dashboard s uloženými odpověďmi" loading="lazy" /></div>
+              <div class="log__media"><img src="https://framerusercontent.com/images/ZCUolRzdTgZF2qcr3flePPx2dk.jpg?width=2500&height=1406" alt="Dashboard s uloženými odpověďmi" loading="lazy" /><span class="brandfix" aria-hidden="true">Nexora Pro</span></div>
               <p>Každou odpověď Nexory teď uložíte jako ověřenou a zařadíte do kolekcí — živá znalostní báze, která se buduje sama, jak tým pracuje. Uložené odpovědi zůstávají propojené se zdrojem, takže při změně podkladu Nexora označí odpověď k revizi.</p>
             </div>
           </article>
-          <article class="log__item reveal">
+          <article class="log__item" style="--i:1">
+            <div class="log__veil" aria-hidden="true"></div>
             <div class="log__side">
               <span class="log__rail" aria-hidden="true"></span>
               <time datetime="2026-03-04"><span class="log__dot" aria-hidden="true"></span>4. 3. 2026</time>
@@ -305,7 +371,8 @@
               <p>Každá odpověď nyní odkazuje na přesný odstavec, řádek či zprávu, ze které vychází. Kliknutím na badge zdroje skočíte rovnou na zvýrazněnou pasáž v kontextu. Když si zdroje odporují, Nexora to označí — rozhodnutí zůstává na vašem týmu.</p>
             </div>
           </article>
-          <article class="log__item reveal">
+          <article class="log__item" style="--i:2">
+            <div class="log__veil" aria-hidden="true"></div>
             <div class="log__side">
               <span class="log__rail" aria-hidden="true"></span>
               <time datetime="2026-02-10"><span class="log__dot" aria-hidden="true"></span>10. 2. 2026</time>
@@ -316,7 +383,8 @@
               <p>Workspace nově podporuje granulární role. Přiřaďte členům roli Admin, Editor nebo Čtenář a řiďte, kdo může připojovat zdroje, spouštět akce a spravovat fakturaci. Oprávnění se projeví okamžitě ve všech aktivních relacích.</p>
             </div>
           </article>
-          <article class="log__item reveal">
+          <article class="log__item" style="--i:3">
+            <div class="log__veil" aria-hidden="true"></div>
             <div class="log__side">
               <span class="log__rail" aria-hidden="true"></span>
               <time datetime="2026-01-20"><span class="log__dot" aria-hidden="true"></span>20. 1. 2026</time>
@@ -521,8 +589,9 @@
               <h4 class="chat__welcome">Vítejte zpět</h4>
               <p class="chat__hint">S čím vám dnes mohu pomoci, Alexi?</p>
             </div>
+            <div class="chat__convo" aria-live="polite"></div>
             <div class="chat__input">
-              <p>Zeptejte se na cokoli. Napište @ pro zmínky a / pro zkratky.</p>
+              <p class="chat__ph"><span class="ph-text">Zeptejte se na cokoli. Napište @ pro zmínky a / pro zkratky.</span><span class="caret" aria-hidden="true"></span></p>
               <div class="chat__input-bar">
                 <div class="chat__icons chat__icons--left">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8 L9.8 16.3 C7.6 18.6 3.9 18.6 1.7 16.3 C-0.6 14 -0.6 10.3 1.7 8 L8.5 1.1 C10 -0.4 12.4 -0.4 13.9 1.1 C15.4 2.7 15.4 5.1 13.9 6.6 L7.1 13.5 C6.4 14.3 5.2 14.3 4.4 13.5 C3.7 12.8 3.7 11.5 4.4 10.8 L11.2 3.9" transform="translate(3 3)"/></svg>

@@ -123,6 +123,27 @@
       pImgs.push(im);
     });
 
+  /* changelog — stack scroll reveal */
+  const logItems = Array.from(document.querySelectorAll("#logStack .log__item"));
+  function stackFx(vh) {
+    for (let i = 0; i < logItems.length; i++) {
+      const it = logItems[i];
+      const next = logItems[i + 1];
+      const veil = it.querySelector(".log__veil");
+      if (!next) {
+        it.style.transform = "";
+        if (veil) veil.style.opacity = 0;
+        continue;
+      }
+      const start = 88 + i * 16;
+      const nt = next.getBoundingClientRect().top;
+      let p = (vh - nt) / (vh - start);
+      p = Math.max(0, Math.min(1, p));
+      it.style.transform = `scale(${(1 - p * 0.06).toFixed(4)}) translateY(${(-p * 12).toFixed(1)}px)`;
+      if (veil) veil.style.opacity = (p * 0.5).toFixed(3);
+    }
+  }
+
   let ticking = false;
   function parallax() {
     ticking = false;
@@ -140,6 +161,7 @@
       const f = parseFloat(im.dataset.parallax) || 0.06;
       im.style.transform = `translateY(${(off * -f).toFixed(1)}px) scale(1.14)`;
     }
+    stackFx(vh);
   }
   const onParallax = () => {
     if (!ticking) {
@@ -422,8 +444,256 @@
       e.preventDefault();
       const btn = form.querySelector("button");
       btn.textContent = "Odesláno ✓";
+      btn.classList.add("sent");
       form.reset();
-      setTimeout(() => (btn.textContent = "Odeslat"), 3000);
+      setTimeout(() => {
+        btn.textContent = "Odeslat";
+        btn.classList.remove("sent");
+      }, 3000);
     });
   }
+
+  /* ─────────────────────────────────────────────
+     HERO — hvězdné nebe (generované vrstvy)
+  ───────────────────────────────────────────── */
+  (function stars() {
+    const layers = document.querySelectorAll(".hero__stars i");
+    if (!layers.length) return;
+    const counts = [42, 30, 22];
+    layers.forEach((el, li) => {
+      const parts = [];
+      for (let i = 0; i < counts[li]; i++) {
+        const x = (Math.random() * 100).toFixed(2);
+        const y = (Math.random() * 62).toFixed(2);
+        const a = (0.35 + Math.random() * 0.65).toFixed(2);
+        parts.push(`${x}vw ${y}vh 0 rgba(255,250,244,${a})`);
+      }
+      el.style.boxShadow = parts.join(",");
+    });
+  })();
+
+  /* ─────────────────────────────────────────────
+     BLOG — 3D tilt karet
+  ───────────────────────────────────────────── */
+  document.querySelectorAll(".post").forEach((card) => {
+    let rq = null;
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top) / r.height - 0.5) * -6;
+      const ry = ((e.clientX - r.left) / r.width - 0.5) * 6;
+      if (rq) cancelAnimationFrame(rq);
+      rq = raf(() => (card.style.transform = `perspective(900px) translateY(-4px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`));
+    });
+    const flat = () => {
+      if (rq) cancelAnimationFrame(rq);
+      card.style.transform = "";
+    };
+    card.addEventListener("pointerleave", flat);
+    card.addEventListener("pointercancel", flat);
+  });
+
+  /* ─────────────────────────────────────────────
+     VELOCITY SKEW — jemné zkosení podle rychlosti scrollu
+  ───────────────────────────────────────────── */
+  (function vskew() {
+    const target = document.querySelector("main");
+    if (!target) return;
+    let prev = scrollY();
+    let cur = 0;
+    function loop() {
+      const y = scrollY();
+      const v = y - prev;
+      prev = y;
+      const goal = Math.max(-1.1, Math.min(1.1, v * 0.028));
+      cur += (goal - cur) * 0.1;
+      target.style.setProperty("--vskew", (Math.abs(cur) < 0.002 ? 0 : cur).toFixed(3) + "deg");
+      raf(loop);
+    }
+    raf(loop);
+  })();
+
+  /* ─────────────────────────────────────────────
+     CHAT — živá konverzace (typewriter + bubliny)
+  ───────────────────────────────────────────── */
+  const CONVOS = [
+    {
+      tab: 0,
+      q: "Shrň zpětnou vazbu zákazníků za Q2",
+      a: "Hotovo — 3 hlavní témata: onboarding (42 %), ceny (27 %) a integrace (18 %).",
+      src: "Zdroj: CRM · 128 záznamů",
+      sugg: [
+        "Shrň náš produkt jednoduše pro nové uživatele",
+        "Porovnej zpětnou vazbu za Q1 a Q2",
+        "Najdi nejčastější požadavky na funkce",
+        "Připrav podklady pro poradu produktu",
+      ],
+    },
+    {
+      tab: 1,
+      q: "Jak resetuju heslo klientovi?",
+      a: "Návod má 4 kroky — poslal jsem ti je do vlákna i s odkazem na dokumentaci.",
+      src: "Zdroj: Help centrum",
+      sugg: [
+        "Napiš přátelskou odpověď podpory podle naší dokumentace",
+        "Najdi řešení chyby přihlášení v Safari",
+        "Shrň dnešní eskalace a jejich stav",
+        "Připrav odpověď na dotaz k fakturaci",
+      ],
+    },
+    {
+      tab: 2,
+      q: "Napiš follow-up po dnešním demu",
+      a: "Návrh e-mailu je připravený — shrnutí dema, 3 přínosy a termín další schůzky.",
+      src: "Koncept uložen",
+      sugg: [
+        "Napiš stručný follow-up e-mail po obchodním hovoru",
+        "Vytvoř oznámení o nové funkci pro zákazníky",
+        "Přepiš tenhle odstavec srozumitelněji",
+        "Navrhni předmět e-mailu s vyšším otevřením",
+      ],
+    },
+    {
+      tab: 3,
+      q: "Založ ticket na chybu přihlášení",
+      a: "Ticket NEX-142 založen a přiřazen týmu Auth. Priorita: vysoká.",
+      src: "Akce provedena ✓",
+      sugg: [
+        "Vytáhni úkoly a odpovědné osoby z poznámky ze schůzky",
+        "Aktualizuj stav obchodu v CRM",
+        "Naplánuj schůzku s týmem podpory",
+        "Pošli týdenní report do Slacku",
+      ],
+    },
+  ];
+
+  function chatEngine(root) {
+    const convo = root.querySelector(".chat__convo");
+    const ph = root.querySelector(".ph-text");
+    const tabs = Array.from(root.querySelectorAll(".chat__tab"));
+    const sugList = root.querySelector(".chat__suggestions");
+    if (!convo || !ph) return;
+    const defaultPh = ph.textContent;
+    let idx = 0;
+    let runId = 0;
+    let timer = null;
+
+    const wait = (ms) =>
+      new Promise((res) => {
+        timer = setTimeout(res, ms);
+      });
+    const bubble = (kind) => {
+      const b = document.createElement("div");
+      b.className = "bubble bubble--" + kind;
+      return b;
+    };
+    const show = (el) => raf(() => raf(() => el.classList.add("show")));
+
+    async function typeInto(el, text, speed, run) {
+      for (let i = 1; i <= text.length; i++) {
+        if (run !== runId) return false;
+        el.textContent = text.slice(0, i);
+        await wait(speed);
+      }
+      return run === runId;
+    }
+
+    function swapSuggestions(items) {
+      if (!sugList) return;
+      const lis = Array.from(sugList.children);
+      lis.forEach((li, i) => setTimeout(() => li.classList.add("out"), i * 50));
+      setTimeout(() => {
+        sugList.innerHTML = "";
+        items.forEach((t, i) => {
+          const li = document.createElement("li");
+          if (i > 1) li.className = "hide-sm";
+          li.classList.add("out");
+          li.innerHTML = `${t} <span class="sug-arrow" aria-hidden="true">↗</span>`;
+          sugList.appendChild(li);
+          setTimeout(() => li.classList.remove("out"), 60 + i * 70);
+        });
+      }, 320);
+    }
+
+    function resetView() {
+      clearTimeout(timer);
+      root.classList.remove("typing", "sent");
+      convo.classList.remove("on");
+      convo.innerHTML = "";
+      ph.textContent = defaultPh;
+    }
+
+    async function cycle(run) {
+      while (run === runId) {
+        const c = CONVOS[idx % CONVOS.length];
+        if (tabs.length) tabs.forEach((t, k) => t.classList.toggle("is-active", k === c.tab % tabs.length));
+        swapSuggestions(c.sugg);
+        await wait(700);
+        if (run !== runId) return;
+
+        root.classList.add("typing");
+        if (!(await typeInto(ph, c.q, 26, run))) return;
+        root.classList.remove("typing");
+        root.classList.add("sent");
+        await wait(280);
+        if (run !== runId) return;
+        root.classList.remove("sent");
+        ph.textContent = defaultPh;
+
+        convo.classList.add("on");
+        const ub = bubble("user");
+        ub.textContent = c.q;
+        convo.appendChild(ub);
+        show(ub);
+        await wait(450);
+        if (run !== runId) return;
+
+        const tb = bubble("typing");
+        tb.innerHTML = "<i></i><i></i><i></i>";
+        convo.appendChild(tb);
+        show(tb);
+        await wait(1000);
+        if (run !== runId) return;
+        tb.remove();
+
+        const ab = bubble("ai");
+        const span = document.createElement("span");
+        ab.appendChild(span);
+        convo.appendChild(ab);
+        show(ab);
+        if (!(await typeInto(span, c.a, 14, run))) return;
+
+        const chip = document.createElement("span");
+        chip.className = "src-chip";
+        chip.textContent = c.src;
+        ab.appendChild(chip);
+        show(chip);
+        await wait(2700);
+        if (run !== runId) return;
+
+        convo.classList.remove("on");
+        await wait(650);
+        if (run !== runId) return;
+        convo.innerHTML = "";
+        idx++;
+      }
+    }
+
+    const cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            runId++;
+            resetView();
+            cycle(runId);
+          } else {
+            runId++;
+            resetView();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    cio.observe(root);
+  }
+  document.querySelectorAll(".chat").forEach(chatEngine);
 })();

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O nás — Nexora</title>
+  <meta name="description" content="Jsme tým, který věří, že AI má odpovídat s důkazy a jednat s rozvahou. Poznejte příběh a hodnoty Nexory." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="O nás — Nexora" />
+  <meta property="og:description" content="Jsme tým, který věří, že AI má odpovídat s důkazy a jednat s rozvahou." />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 L29 16 L16 29 L3 16 Z' fill='%23fff3f0'/%3E%3Cpath d='M16 11 L21 16 L16 21 L11 16 Z' fill='%23000'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.14/dist/lenis.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="pre">
+<div class="preloader" id="preloader" aria-hidden="true">
+  <span class="gem"></span>
+  <span class="preloader__brand">Nexora</span>
+  <div class="preloader__bar"><div class="preloader__fill" id="preFill"></div></div>
+  <span class="preloader__pct" id="prePct">0&nbsp;%</span>
+</div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="scroll-prog" id="scrollProg" aria-hidden="true"></div>
+<div class="fx-orbs" aria-hidden="true"><span class="fx-orb fx-orb--1"></span><span class="fx-orb fx-orb--2"></span><span class="fx-orb fx-orb--3"></span></div>
+<div class="fx-noise" aria-hidden="true"></div>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-head" id="siteHead">
+    <a class="brand" href="index.html" aria-label="Nexora — domů">
+      <span class="gem" aria-hidden="true"></span>
+    </a>
+    <nav class="site-nav" aria-label="Hlavní navigace">
+      <a href="about.html">O nás</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="index.html#pricing">Ceník</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+    <div class="head-right">
+      <button class="sound-btn" id="soundBtn" aria-pressed="false" aria-label="Přepnout zvuk">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 19V5L7.5 9.5z"/><path class="waves" d="M15 9.5a4 4 0 0 1 0 5M17.5 7a8 8 0 0 1 0 10"/></svg>
+      </button>
+      <a class="btn btn--primary btn--sm" href="index.html#cta">Začít</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="chip reveal"><span class="chip__dot" aria-hidden="true"></span>O nás</span>
+        <h1 class="section-title reveal">Věříme, že AI má odpovídat s důkazy a jednat s rozvahou</h1>
+        <p class="section-lead reveal">Nexora vznikla z frustrace nad nástroji, které odpovídají sebejistě, ale bez zdrojů. Stavíme AI agenta, kterému mohou týmy skutečně důvěřovat — každá odpověď má u sebe zdroj a každá akce auditní stopu.</p>
+        <div class="page-hero__rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="section" style="padding-top:20px">
+      <div class="container">
+        <div class="stats-band">
+          <div class="stat-card reveal"><b><span data-count="42" data-suffix=" M">0</span></b><span>zpracovaných dotazů měsíčně</span></div>
+          <div class="stat-card reveal"><b><span data-count="99.98" data-dec="2" data-suffix=" %">0</span></b><span>dostupnost platformy</span></div>
+          <div class="stat-card reveal"><b><span data-count="4.9" data-dec="1" data-suffix=" / 5">0</span></b><span>hodnocení od zákazníků</span></div>
+        </div>
+
+        <div class="about-strip">
+          <figure class="reveal"><img src="https://framerusercontent.com/images/2uayq1aC9XZcwLgTTRK6M2ok8KE.jpg?width=1450&height=1925" alt="Členka týmu Nexora" loading="lazy" /></figure>
+          <figure class="reveal"><img src="https://framerusercontent.com/images/8PPauCURBfmckfonpgSJY9NbDQ.jpg?width=1450&height=1925" alt="Člen týmu Nexora" loading="lazy" /></figure>
+          <figure class="reveal"><img src="https://framerusercontent.com/images/6qMq4KZghjDbviFxb8hhxGW0fT0.jpg?width=1450&height=1925" alt="Členka týmu Nexora" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HODNOTY ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="chip reveal"><span class="chip__dot" aria-hidden="true"></span>Hodnoty</span>
+            <h2 class="section-title reveal">Na čem stavíme</h2>
+          </div>
+        </div>
+        <div class="values-list">
+          <div class="int-row reveal">
+            <div>
+              <strong>Důkazy před sebejistotou</strong>
+              <span>Odpověď bez zdroje je jen hádanka. Každý výstup Nexory odkazuje na přesné místo, ze kterého vychází.</span>
+            </div>
+            <span class="int-row__ico" aria-hidden="true">◆</span>
+          </div>
+          <div class="int-row reveal">
+            <div>
+              <strong>Akce s rozvahou</strong>
+              <span>AI smí konat, ale citlivé kroky procházejí schvalovací bránou a všechno zůstává v auditní stopě.</span>
+            </div>
+            <span class="int-row__ico" aria-hidden="true">◆</span>
+          </div>
+          <div class="int-row reveal">
+            <div>
+              <strong>Rychlost bez kompromisů</strong>
+              <span>Nastavení za pět minut, odpovědi za vteřiny. Bezpečnost a soukromí přitom nikdy nejsou volitelný příplatek.</span>
+            </div>
+            <span class="int-row__ico" aria-hidden="true">◆</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand">
+        <span class="gem gem--sm" aria-hidden="true"></span>
+        <span>Nexora</span>
+      </div>
+      <nav class="site-foot__nav" aria-label="Patička">
+        <a href="index.html#features">Funkce</a>
+        <a href="index.html#pricing">Ceník</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="blog.html">Blog</a>
+        <a href="mailto:hello@nexora.ai">Kontakt</a>
+      </nav>
+      <p class="site-foot__copy">© 2026 Nexora. Všechna práva vyhrazena.</p>
+    </div>
+  </footer>
+
+</div>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

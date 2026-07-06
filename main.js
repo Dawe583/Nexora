@@ -374,6 +374,7 @@
     ],
   };
   const faqList = document.getElementById("faqList");
+  if (faqList) {
   function renderFaq(set) {
     faqList.innerHTML = "";
     faqData[set].forEach(([q, a], i) => {
@@ -399,6 +400,7 @@
     })
   );
   renderFaq("general");
+  }
 
   /* ─────────────────────────────────────────────
      Chat mockup taby (kosmetické)
@@ -430,6 +432,7 @@
     qCard = document.querySelector(".quote__body");
   let qI = 0,
     qTimer;
+  if (qDots && qText) {
   quotes.forEach((_, i) => {
     const d = document.createElement("button");
     if (i === 0) d.className = "is-active";
@@ -460,6 +463,7 @@
     b.addEventListener("click", () => setQuote(qI + Number(b.dataset.q), true))
   );
   resetQTimer();
+  }
 
   /* ─────────────────────────────────────────────
      CTA formulář (demo)
@@ -643,7 +647,7 @@
     function resetView() {
       clearTimeout(timer);
       root.classList.remove("typing", "sent");
-      convo.classList.remove("on");
+      convo.classList.remove("bye");
       convo.innerHTML = "";
       ph.textContent = defaultPh;
     }
@@ -665,7 +669,6 @@
         root.classList.remove("sent");
         ph.textContent = defaultPh;
 
-        convo.classList.add("on");
         const ub = bubble("user");
         ub.textContent = c.q;
         convo.appendChild(ub);
@@ -696,10 +699,11 @@
         await wait(2700);
         if (run !== runId) return;
 
-        convo.classList.remove("on");
-        await wait(650);
+        convo.classList.add("bye");
+        await wait(500);
         if (run !== runId) return;
         convo.innerHTML = "";
+        convo.classList.remove("bye");
         idx++;
       }
     }
@@ -722,4 +726,175 @@
     cio.observe(root);
   }
   document.querySelectorAll(".chat").forEach(chatEngine);
+
+  /* ─────────────────────────────────────────────
+     PRELOADER
+  ───────────────────────────────────────────── */
+  const pre = document.getElementById("preloader");
+  if (pre) {
+    const fill = document.getElementById("preFill");
+    const pct = document.getElementById("prePct");
+    const t0 = performance.now();
+    const DUR = 1100;
+    const easeOut = (p) => 1 - Math.pow(1 - p, 3);
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / DUR);
+      const v = Math.round(easeOut(p) * 100);
+      if (fill) fill.style.width = v + "%";
+      if (pct) pct.textContent = v + " %";
+      if (p < 1) {
+        raf(step);
+      } else {
+        pre.classList.add("done");
+        document.body.classList.remove("pre");
+        setTimeout(() => pre.remove(), 900);
+      }
+    };
+    raf(step);
+  } else {
+    document.body.classList.remove("pre");
+  }
+
+  /* ─────────────────────────────────────────────
+     SVĚTELNÝ KURZOR
+  ───────────────────────────────────────────── */
+  const cGlow = document.querySelector(".cursor-glow");
+  const cDot = document.querySelector(".cursor-dot");
+  if (cGlow && cDot) {
+    let tx = -300, ty = -300, gx = -300, gy = -300, dx = -300, dy = -300, cursorRaf = null;
+    const follow = () => {
+      gx += (tx - gx) * 0.09;
+      gy += (ty - gy) * 0.09;
+      dx += (tx - dx) * 0.42;
+      dy += (ty - dy) * 0.42;
+      cGlow.style.transform = `translate(${gx.toFixed(1)}px,${gy.toFixed(1)}px) translate(-50%,-50%)`;
+      cDot.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) translate(-50%,-50%)`;
+      if (Math.abs(tx - gx) + Math.abs(ty - gy) > 0.2) cursorRaf = raf(follow);
+      else cursorRaf = null;
+    };
+    document.addEventListener("pointermove", (e) => {
+      tx = e.clientX;
+      ty = e.clientY;
+      if (!document.body.classList.contains("cursor-on")) {
+        gx = dx = tx;
+        gy = dy = ty;
+        document.body.classList.add("cursor-on");
+      }
+      const hot = e.target.closest && e.target.closest("a,button,.faq-item__q,.chat__tab,input");
+      document.body.classList.toggle("cursor-hot", !!hot);
+      if (!cursorRaf) cursorRaf = raf(follow);
+    });
+    document.addEventListener("pointerleave", () => document.body.classList.remove("cursor-on"));
+  }
+
+  /* ─────────────────────────────────────────────
+     ZVUKOVÝ DESIGN (výchozí: vypnuto)
+  ───────────────────────────────────────────── */
+  const soundBtn = document.getElementById("soundBtn");
+  if (soundBtn) {
+    let actx = null;
+    let soundOn = false;
+    const ctx = () => {
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === "suspended") actx.resume();
+      return actx;
+    };
+    const blip = (freq, dur, gainV, type) => {
+      if (!soundOn) return;
+      try {
+        const ac = ctx();
+        const o = ac.createOscillator();
+        const g = ac.createGain();
+        o.type = type || "sine";
+        o.frequency.setValueAtTime(freq, ac.currentTime);
+        o.frequency.exponentialRampToValueAtTime(Math.max(60, freq * 0.6), ac.currentTime + dur);
+        g.gain.setValueAtTime(gainV, ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + dur);
+        o.connect(g).connect(ac.destination);
+        o.start();
+        o.stop(ac.currentTime + dur + 0.02);
+      } catch (_) {}
+    };
+    const tick = () => blip(1250, 0.07, 0.028, "sine");
+    const whoosh = () => {
+      blip(320, 0.32, 0.05, "sine");
+      setTimeout(() => blip(660, 0.22, 0.035, "sine"), 70);
+    };
+    soundBtn.addEventListener("click", () => {
+      soundOn = !soundOn;
+      soundBtn.setAttribute("aria-pressed", String(soundOn));
+      if (soundOn) {
+        ctx();
+        whoosh();
+      }
+    });
+    let lastTick = 0;
+    document.addEventListener("pointerover", (e) => {
+      if (!soundOn || !e.target.closest) return;
+      if (!e.target.closest("a,button,.chat__tab,.faq-item__q")) return;
+      const now = performance.now();
+      if (now - lastTick < 90) return;
+      lastTick = now;
+      tick();
+    });
+    document.addEventListener("submit", () => whoosh(), true);
+  }
+
+  /* ─────────────────────────────────────────────
+     COUNT-UP statistik ([data-count])
+  ───────────────────────────────────────────── */
+  const statEls = document.querySelectorAll("[data-count]");
+  if (statEls.length) {
+    const statIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const el = en.target;
+          statIO.unobserve(el);
+          const target = parseFloat(el.dataset.count);
+          const dec = parseInt(el.dataset.dec || "0", 10);
+          const suffix = el.dataset.suffix || "";
+          if (isNaN(target)) return;
+          const t0 = performance.now();
+          const DUR = 1400;
+          const step = (now) => {
+            const p = Math.min(1, (now - t0) / DUR);
+            const v = target * (1 - Math.pow(1 - p, 3));
+            el.textContent = v.toFixed(dec).replace(".", ",") + suffix;
+            if (p < 1) raf(step);
+          };
+          raf(step);
+        });
+      },
+      { threshold: 0.5 }
+    );
+    statEls.forEach((el) => statIO.observe(el));
+  }
+
+  /* ─────────────────────────────────────────────
+     BLOG: filtry kategorií + vyhledávání
+  ───────────────────────────────────────────── */
+  const catBtns = document.querySelectorAll(".blog-cats button");
+  const blogSearch = document.getElementById("blogSearch");
+  if (catBtns.length || blogSearch) {
+    const posts = document.querySelectorAll(".post[data-cat]");
+    let activeCat = "all";
+    const applyFilter = () => {
+      const q = (blogSearch ? blogSearch.value : "").trim().toLowerCase();
+      posts.forEach((p) => {
+        const catOk = activeCat === "all" || p.dataset.cat === activeCat;
+        const textOk = !q || p.textContent.toLowerCase().includes(q);
+        p.classList.toggle("hidden", !(catOk && textOk));
+      });
+    };
+    catBtns.forEach((b) =>
+      b.addEventListener("click", () => {
+        catBtns.forEach((x) => x.classList.remove("is-active"));
+        b.classList.add("is-active");
+        activeCat = b.dataset.cat || "all";
+        applyFilter();
+      })
+    );
+    if (blogSearch) blogSearch.addEventListener("input", applyFilter);
+  }
 })();

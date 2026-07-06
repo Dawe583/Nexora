@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Nexora</title>
+  <meta name="description" content="Postřehy o AI agentech, důvěryhodných odpovědích a moderní práci týmů. Blog Nexory." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog — Nexora" />
+  <meta property="og:description" content="Postřehy o AI agentech, důvěryhodných odpovědích a moderní práci týmů." />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 L29 16 L16 29 L3 16 Z' fill='%23fff3f0'/%3E%3Cpath d='M16 11 L21 16 L16 21 L11 16 Z' fill='%23000'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.14/dist/lenis.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="pre">
+<div class="preloader" id="preloader" aria-hidden="true">
+  <span class="gem"></span>
+  <span class="preloader__brand">Nexora</span>
+  <div class="preloader__bar"><div class="preloader__fill" id="preFill"></div></div>
+  <span class="preloader__pct" id="prePct">0&nbsp;%</span>
+</div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="scroll-prog" id="scrollProg" aria-hidden="true"></div>
+<div class="fx-orbs" aria-hidden="true"><span class="fx-orb fx-orb--1"></span><span class="fx-orb fx-orb--2"></span><span class="fx-orb fx-orb--3"></span></div>
+<div class="fx-noise" aria-hidden="true"></div>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-head" id="siteHead">
+    <a class="brand" href="index.html" aria-label="Nexora — domů">
+      <span class="gem" aria-hidden="true"></span>
+    </a>
+    <nav class="site-nav" aria-label="Hlavní navigace">
+      <a href="about.html">O nás</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="index.html#pricing">Ceník</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+    <div class="head-right">
+      <button class="sound-btn" id="soundBtn" aria-pressed="false" aria-label="Přepnout zvuk">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 19V5L7.5 9.5z"/><path class="waves" d="M15 9.5a4 4 0 0 1 0 5M17.5 7a8 8 0 0 1 0 10"/></svg>
+      </button>
+      <a class="btn btn--primary btn--sm" href="index.html#cta">Začít</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="chip reveal"><span class="chip__dot" aria-hidden="true"></span>Blog</span>
+        <h1 class="section-title reveal">Postřehy o AI, důvěře a moderní práci</h1>
+        <p class="section-lead reveal">Píšeme o tom, jak AI agenti mění každodenní práci týmů — a proč na odkazech na zdroje záleží víc, než si myslíte.</p>
+        <div class="page-hero__rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ============ BLOG ============ -->
+    <section class="section blog" id="blog" style="padding-top:0">
+      <div class="container">
+        <div class="blog-tools">
+          <div class="blog-cats" role="tablist" aria-label="Kategorie">
+            <button class="is-active" data-cat="all">Vše</button>
+            <button data-cat="trendy">Trendy</button>
+            <button data-cat="pruvodce">Průvodce</button>
+            <button data-cat="produkt">Produkt</button>
+          </div>
+          <label class="blog-search">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
+            <input id="blogSearch" type="search" placeholder="Hledat články…" aria-label="Hledat články" />
+          </label>
+        </div>
+
+        <div class="posts">
+          <a class="post reveal" href="#" data-cat="trendy">
+            <div class="post__img"><img src="https://framerusercontent.com/images/ynhYjI9b7gEqESVHaqk4kb82qf4.jpg?width=1925&height=1450" alt="Osamělý strom v kopcovité krajině při západu slunce" loading="lazy" /></div>
+            <h6>Jak AI agenti nahrazují práci plnou záložek</h6>
+            <div class="post__meta"><span>Trendy</span><span class="dot" aria-hidden="true"></span><span>28. 2. 2026</span></div>
+          </a>
+          <a class="post reveal" href="#" data-cat="pruvodce">
+            <div class="post__img"><img src="https://framerusercontent.com/images/5rGlW7xtbsUz4PnBAtaaAwvqGmk.jpg?width=1925&height=1450" alt="Ruka držící rostlinu proti horskému západu slunce" loading="lazy" /></div>
+            <h6>Důvěra ve výstupy AI: proč záleží na odkazech na zdroje</h6>
+            <div class="post__meta"><span>Průvodce</span><span class="dot" aria-hidden="true"></span><span>21. 2. 2026</span></div>
+          </a>
+          <a class="post reveal" href="#" data-cat="produkt">
+            <div class="post__img"><img src="https://framerusercontent.com/images/H40PuKTldmX1NVNoe6kCxmD1bo.jpg?width=1925&height=1450" alt="Pták klesající proti soumračným horám" loading="lazy" /></div>
+            <h6>Od ticketu podpory k vyřešení za méně než dvě minuty</h6>
+            <div class="post__meta"><span>Produkt</span><span class="dot" aria-hidden="true"></span><span>14. 2. 2026</span></div>
+          </a>
+          <a class="post reveal" href="#" data-cat="pruvodce">
+            <div class="post__img"><img src="https://framerusercontent.com/images/ZCUolRzdTgZF2qcr3flePPx2dk.jpg?width=2500&height=1406" alt="Dashboard s uloženými odpověďmi" loading="lazy" /></div>
+            <h6>Jak vybudovat znalostní bázi, která se udržuje sama</h6>
+            <div class="post__meta"><span>Průvodce</span><span class="dot" aria-hidden="true"></span><span>7. 2. 2026</span></div>
+          </a>
+          <a class="post reveal" href="#" data-cat="trendy">
+            <div class="post__img"><img src="https://framerusercontent.com/images/v9Yr4trFZsygSFKIZye6oMUY4.jpg?width=2500&height=1406" alt="Odpověď s panelem citovaných zdrojů" loading="lazy" /></div>
+            <h6>Konec halucinací? Co mění citace zdrojů v praxi</h6>
+            <div class="post__meta"><span>Trendy</span><span class="dot" aria-hidden="true"></span><span>31. 1. 2026</span></div>
+          </a>
+          <a class="post reveal" href="#" data-cat="produkt">
+            <div class="post__img"><img src="https://framerusercontent.com/images/eFufq0tptTi9Qq7gFHic5a5E.jpg?width=2500&height=1406" alt="Analytika akcí ve workspace" loading="lazy" /></div>
+            <h6>Schvalovací brány: jak pustit AI k reálným akcím bezpečně</h6>
+            <div class="post__meta"><span>Produkt</span><span class="dot" aria-hidden="true"></span><span>24. 1. 2026</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand">
+        <span class="gem gem--sm" aria-hidden="true"></span>
+        <span>Nexora</span>
+      </div>
+      <nav class="site-foot__nav" aria-label="Patička">
+        <a href="index.html#features">Funkce</a>
+        <a href="index.html#pricing">Ceník</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="blog.html">Blog</a>
+        <a href="mailto:hello@nexora.ai">Kontakt</a>
+      </nav>
+      <p class="site-foot__copy">© 2026 Nexora. Všechna práva vyhrazena.</p>
+    </div>
+  </footer>
+
+</div>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

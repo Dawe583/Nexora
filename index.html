@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nexora — AI agent, který mění konverzace ve výsledky</title>
   <meta name="description" content="Nexora je AI agent, který mění konverzaci v exekuci — zeptejte se na cokoli, získejte ověřené odpovědi a spouštějte akce během vteřin." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Nexora — AI agent, který mění konverzace ve výsledky" />
+  <meta property="og:description" content="Zeptejte se na cokoli, získejte ověřené odpovědi a spouštějte akce během vteřin." />
+  <meta property="og:image" content="https://framerusercontent.com/images/ZCUolRzdTgZF2qcr3flePPx2dk.jpg?width=2500&height=1406" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#000000" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Nexora","description":"AI agent, který mění konverzace ve výsledky.","email":"hello@nexora.ai"}</script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 L29 16 L16 29 L3 16 Z' fill='%23fff3f0'/%3E%3Cpath d='M16 11 L21 16 L16 21 L11 16 Z' fill='%23000'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,7 +20,15 @@
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.14/dist/lenis.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="pre">
+<div class="preloader" id="preloader" aria-hidden="true">
+  <span class="gem"></span>
+  <span class="preloader__brand">Nexora</span>
+  <div class="preloader__bar"><div class="preloader__fill" id="preFill"></div></div>
+  <span class="preloader__pct" id="prePct">0&nbsp;%</span>
+</div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
 <div class="scroll-prog" id="scrollProg" aria-hidden="true"></div>
 <div class="fx-orbs" aria-hidden="true"><span class="fx-orb fx-orb--1"></span><span class="fx-orb fx-orb--2"></span><span class="fx-orb fx-orb--3"></span></div>
 <div class="fx-noise" aria-hidden="true"></div>
@@ -24,12 +40,17 @@
       <span class="gem" aria-hidden="true"></span>
     </a>
     <nav class="site-nav" aria-label="Hlavní navigace">
-      <a href="#about">O nás</a>
-      <a href="#changelog">Changelog</a>
+      <a href="about.html">O nás</a>
+      <a href="changelog.html">Changelog</a>
       <a href="#pricing">Ceník</a>
-      <a href="#blog">Blog</a>
+      <a href="blog.html">Blog</a>
     </nav>
-    <a class="btn btn--primary btn--sm" href="#cta">Začít</a>
+    <div class="head-right">
+      <button class="sound-btn" id="soundBtn" aria-pressed="false" aria-label="Přepnout zvuk">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 19V5L7.5 9.5z"/><path class="waves" d="M15 9.5a4 4 0 0 1 0 5M17.5 7a8 8 0 0 1 0 10"/></svg>
+      </button>
+      <a class="btn btn--primary btn--sm" href="#cta">Začít</a>
+    </div>
   </header>
 
   <main id="top">
@@ -121,6 +142,14 @@
         <div class="logos__track">
           <span>Layerform</span><span>Northwind</span><span>Cobalt</span><span>Meridian</span><span>Aperture</span><span>Vantage</span>
           <span>Layerform</span><span>Northwind</span><span>Cobalt</span><span>Meridian</span><span>Aperture</span><span>Vantage</span>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="stats-band">
+          <div class="stat-card reveal"><b><span data-count="42" data-suffix=" M">0</span></b><span>zpracovaných dotazů měsíčně</span></div>
+          <div class="stat-card reveal"><b><span data-count="99.98" data-dec="2" data-suffix=" %">0</span></b><span>dostupnost platformy</span></div>
+          <div class="stat-card reveal"><b><span data-count="4.9" data-dec="1" data-suffix=" / 5">0</span></b><span>hodnocení od zákazníků</span></div>
         </div>
       </div>
     </section>
@@ -343,7 +372,7 @@
             <span class="chip reveal"><span class="chip__dot" aria-hidden="true"></span>Changelog</span>
             <h2 class="section-title reveal">Nové funkce, opravy a vylepšení</h2>
           </div>
-          <a class="link-arrow reveal" href="#changelog">Všechny novinky →</a>
+          <a class="link-arrow reveal" href="changelog.html">Všechny novinky →</a>
         </div>
 
         <div class="log log--stack" id="logStack">
@@ -538,7 +567,7 @@
             <span class="chip reveal"><span class="chip__dot" aria-hidden="true"></span>Blog</span>
             <h2 class="section-title reveal">Nápady, novinky a praktické AI postupy</h2>
           </div>
-          <a class="link-arrow reveal" href="#blog">Přejít na blog →</a>
+          <a class="link-arrow reveal" href="blog.html">Přejít na blog →</a>
         </div>
 
         <div class="posts">

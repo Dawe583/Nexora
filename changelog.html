@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — Nexora</title>
+  <meta name="description" content="Nové funkce, opravy a vylepšení platformy Nexora. Sledujte, co je nového." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Changelog — Nexora" />
+  <meta property="og:description" content="Nové funkce, opravy a vylepšení platformy Nexora." />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 L29 16 L16 29 L3 16 Z' fill='%23fff3f0'/%3E%3Cpath d='M16 11 L21 16 L16 21 L11 16 Z' fill='%23000'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.14/dist/lenis.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="pre">
+<div class="preloader" id="preloader" aria-hidden="true">
+  <span class="gem"></span>
+  <span class="preloader__brand">Nexora</span>
+  <div class="preloader__bar"><div class="preloader__fill" id="preFill"></div></div>
+  <span class="preloader__pct" id="prePct">0&nbsp;%</span>
+</div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="scroll-prog" id="scrollProg" aria-hidden="true"></div>
+<div class="fx-orbs" aria-hidden="true"><span class="fx-orb fx-orb--1"></span><span class="fx-orb fx-orb--2"></span><span class="fx-orb fx-orb--3"></span></div>
+<div class="fx-noise" aria-hidden="true"></div>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-head" id="siteHead">
+    <a class="brand" href="index.html" aria-label="Nexora — domů">
+      <span class="gem" aria-hidden="true"></span>
+    </a>
+    <nav class="site-nav" aria-label="Hlavní navigace">
+      <a href="about.html">O nás</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="index.html#pricing">Ceník</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+    <div class="head-right">
+      <button class="sound-btn" id="soundBtn" aria-pressed="false" aria-label="Přepnout zvuk">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 19V5L7.5 9.5z"/><path class="waves" d="M15 9.5a4 4 0 0 1 0 5M17.5 7a8 8 0 0 1 0 10"/></svg>
+      </button>
+      <a class="btn btn--primary btn--sm" href="index.html#cta">Začít</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="chip reveal"><span class="chip__dot" aria-hidden="true"></span>Changelog</span>
+        <h1 class="section-title reveal">Nové funkce, opravy a vylepšení</h1>
+        <p class="section-lead reveal">Nexoru zlepšujeme každý týden. Tady najdete všechno podstatné — od nových funkcí po drobné opravy.</p>
+        <div class="page-hero__rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ============ CHANGELOG ============ -->
+    <section class="section changelog" id="changelog" style="padding-top:20px">
+      <div class="container">
+        <div class="log log--stack" id="logStack">
+          <article class="log__item" style="--i:0">
+            <div class="log__veil" aria-hidden="true"></div>
+            <div class="log__side">
+              <span class="log__rail" aria-hidden="true"></span>
+              <time datetime="2026-03-23"><span class="log__dot" aria-hidden="true"></span>23. 3. 2026</time>
+            </div>
+            <div class="log__main">
+              <h3>Uložené odpovědi a kolekce</h3>
+              <div class="log__media"><img src="https://framerusercontent.com/images/ZCUolRzdTgZF2qcr3flePPx2dk.jpg?width=2500&height=1406" alt="Dashboard s uloženými odpověďmi" loading="lazy" /><span class="brandfix" aria-hidden="true">Nexora Pro</span></div>
+              <p>Každou odpověď Nexory teď uložíte jako ověřenou a zařadíte do kolekcí — živá znalostní báze, která se buduje sama, jak tým pracuje. Uložené odpovědi zůstávají propojené se zdrojem, takže při změně podkladu Nexora označí odpověď k revizi.</p>
+            </div>
+          </article>
+          <article class="log__item" style="--i:1">
+            <div class="log__veil" aria-hidden="true"></div>
+            <div class="log__side">
+              <span class="log__rail" aria-hidden="true"></span>
+              <time datetime="2026-03-04"><span class="log__dot" aria-hidden="true"></span>4. 3. 2026</time>
+            </div>
+            <div class="log__main">
+              <h3>Odkazy na zdroje v2</h3>
+              <div class="log__media"><img src="https://framerusercontent.com/images/v9Yr4trFZsygSFKIZye6oMUY4.jpg?width=2500&height=1406" alt="Odpověď s panelem citovaných zdrojů" loading="lazy" /></div>
+              <p>Každá odpověď nyní odkazuje na přesný odstavec, řádek či zprávu, ze které vychází. Kliknutím na badge zdroje skočíte rovnou na zvýrazněnou pasáž v kontextu. Když si zdroje odporují, Nexora to označí — rozhodnutí zůstává na vašem týmu.</p>
+            </div>
+          </article>
+          <article class="log__item" style="--i:2">
+            <div class="log__veil" aria-hidden="true"></div>
+            <div class="log__side">
+              <span class="log__rail" aria-hidden="true"></span>
+              <time datetime="2026-02-10"><span class="log__dot" aria-hidden="true"></span>10. 2. 2026</time>
+            </div>
+            <div class="log__main">
+              <h3>Týmová oprávnění a role</h3>
+              <div class="log__media"><img src="https://framerusercontent.com/images/hg3Tg24LlqTuZEp7hHXSGwPQ9U.jpg?width=2500&height=1406" alt="Nastavení rolí ve workspace" loading="lazy" /></div>
+              <p>Workspace nově podporuje granulární role. Přiřaďte členům roli Admin, Editor nebo Čtenář a řiďte, kdo může připojovat zdroje, spouštět akce a spravovat fakturaci. Oprávnění se projeví okamžitě ve všech aktivních relacích.</p>
+            </div>
+          </article>
+          <article class="log__item" style="--i:3">
+            <div class="log__veil" aria-hidden="true"></div>
+            <div class="log__side">
+              <span class="log__rail" aria-hidden="true"></span>
+              <time datetime="2026-01-20"><span class="log__dot" aria-hidden="true"></span>20. 1. 2026</time>
+            </div>
+            <div class="log__main">
+              <h3>Akce ve workspace</h3>
+              <div class="log__media"><img src="https://framerusercontent.com/images/eFufq0tptTi9Qq7gFHic5a5E.jpg?width=2500&height=1406" alt="Analytika akcí ve workspace" loading="lazy" /></div>
+              <p>Nexora nyní provádí akce přímo v propojených nástrojích — založí ticket, aktualizuje obchod, pošle zprávu nebo zapíše poznámku, a to vše z konverzace, kde jste našli odpověď. Každá akce se loguje s kompletní auditní stopou.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand">
+        <span class="gem gem--sm" aria-hidden="true"></span>
+        <span>Nexora</span>
+      </div>
+      <nav class="site-foot__nav" aria-label="Patička">
+        <a href="index.html#features">Funkce</a>
+        <a href="index.html#pricing">Ceník</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="blog.html">Blog</a>
+        <a href="mailto:hello@nexora.ai">Kontakt</a>
+      </nav>
+      <p class="site-foot__copy">© 2026 Nexora. Všechna práva vyhrazena.</p>
+    </div>
+  </footer>
+
+</div>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

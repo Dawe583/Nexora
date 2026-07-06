@@ -79,16 +79,42 @@
   });
 
   /* ─────────────────────────────────────────────
-     HERO TITLE — postupné vyjíždění slov
+     NADPISY — postupné vyjíždění slov (hero + sekce)
   ───────────────────────────────────────────── */
-  const heroTitle = document.querySelector(".hero__title");
-  if (heroTitle && !reduce) {
-    const words = heroTitle.textContent.trim().split(/\s+/);
-    heroTitle.innerHTML = words
-      .map((w, i) => `<span class="hw"><span style="transition-delay:${120 + i * 55}ms">${w}</span></span>`)
-      .join(" ");
-    heroTitle.classList.add("split");
+  function splitTitle(el) {
+    let wi = 0;
+    const wrapWord = (word) => {
+      const outer = document.createElement("span");
+      outer.className = "hw";
+      const inner = document.createElement("span");
+      inner.style.transitionDelay = 90 + wi * 48 + "ms";
+      inner.textContent = word;
+      outer.appendChild(inner);
+      wi++;
+      return outer;
+    };
+    const processInto = (source, target) => {
+      Array.from(source.childNodes).forEach((node) => {
+        if (node.nodeType === 3) {
+          node.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) target.appendChild(document.createTextNode(" "));
+            else target.appendChild(wrapWord(part));
+          });
+        } else if (node.nodeType === 1) {
+          const clone = node.cloneNode(false);
+          processInto(node, clone);
+          target.appendChild(clone);
+        }
+      });
+    };
+    const frag = document.createDocumentFragment();
+    processInto(el, frag);
+    el.textContent = "";
+    el.appendChild(frag);
+    el.classList.add("split");
   }
+  document.querySelectorAll(".hero__title, .section-title").forEach(splitTitle);
 
   /* ─────────────────────────────────────────────
      POSTUPNÉ ROZSVĚCOVÁNÍ SLOV (intro)

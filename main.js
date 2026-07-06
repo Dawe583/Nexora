@@ -123,13 +123,17 @@
     const words = p.textContent.trim().split(/\s+/);
     p.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(" ");
   });
-  const wordEls = Array.from(document.querySelectorAll(".scrub-text .w"));
+  let wordEls = Array.from(document.querySelectorAll(".scrub-text .w"));
   const litWords = () => {
+    if (!wordEls.length) return;
     const vh = window.innerHeight;
+    /* fáze čtení (rekty), pak fáze zápisu (třídy) — bez layout thrashingu */
+    const toLight = [];
     for (const w of wordEls) {
-      const r = w.getBoundingClientRect();
-      if (r.top < vh * 0.72) w.classList.add("lit");
+      if (w.getBoundingClientRect().top < vh * 0.72) toLight.push(w);
     }
+    for (const w of toLight) w.classList.add("lit");
+    if (toLight.length) wordEls = wordEls.filter((w) => !toLight.includes(w));
   };
   litWords();
   bindScroll(litWords);
@@ -149,24 +153,34 @@
       pImgs.push(im);
     });
 
-  /* changelog — stack scroll reveal */
-  const logItems = Array.from(document.querySelectorAll("#logStack .log__item"));
+  /* changelog — stack scroll reveal (rekty čteme najednou, zápisy až poté) */
+  const logItems = Array.from(document.querySelectorAll("#logStack .log__item")).map((el) => ({
+    el,
+    veil: el.querySelector(".log__veil"),
+    lastT: "",
+    lastO: "",
+  }));
   function stackFx(vh) {
+    if (!logItems.length) return;
+    const tops = logItems.map((it) => it.el.getBoundingClientRect().top);
     for (let i = 0; i < logItems.length; i++) {
       const it = logItems[i];
-      const next = logItems[i + 1];
-      const veil = it.querySelector(".log__veil");
-      if (!next) {
-        it.style.transform = "";
-        if (veil) veil.style.opacity = 0;
-        continue;
+      let t = "", o = "0";
+      if (i + 1 < logItems.length) {
+        const start = 88 + i * 16;
+        let p = (vh - tops[i + 1]) / (vh - start);
+        p = Math.max(0, Math.min(1, p));
+        t = `scale(${(1 - p * 0.06).toFixed(4)}) translateY(${(-p * 12).toFixed(1)}px)`;
+        o = (p * 0.5).toFixed(3);
       }
-      const start = 88 + i * 16;
-      const nt = next.getBoundingClientRect().top;
-      let p = (vh - nt) / (vh - start);
-      p = Math.max(0, Math.min(1, p));
-      it.style.transform = `scale(${(1 - p * 0.06).toFixed(4)}) translateY(${(-p * 12).toFixed(1)}px)`;
-      if (veil) veil.style.opacity = (p * 0.5).toFixed(3);
+      if (t !== it.lastT) {
+        it.lastT = t;
+        it.el.style.transform = t;
+      }
+      if (it.veil && o !== it.lastO) {
+        it.lastO = o;
+        it.veil.style.opacity = o;
+      }
     }
   }
 
@@ -180,12 +194,20 @@
       if (mid) mid.style.transform = `translateX(-50%) translateY(${y * 0.11}px)`;
       if (front) front.style.transform = `translateX(-50%) translateY(${y * -0.03}px)`;
     }
+    /* nejdřív všechna čtení rektů, pak všechny zápisy transformů */
+    const writes = [];
     for (const im of pImgs) {
       const r = im.getBoundingClientRect();
       if (r.bottom < -200 || r.top > vh + 200) continue;
       const off = r.top + r.height / 2 - vh / 2;
       const f = parseFloat(im.dataset.parallax) || 0.06;
-      im.style.transform = `translateY(${(off * -f).toFixed(1)}px) scale(1.14)`;
+      writes.push([im, `translateY(${(off * -f).toFixed(1)}px) scale(1.14)`]);
+    }
+    for (const [im, t] of writes) {
+      if (im.__pfx !== t) {
+        im.__pfx = t;
+        im.style.transform = t;
+      }
     }
     stackFx(vh);
   }
@@ -463,6 +485,20 @@
     b.addEventListener("click", () => setQuote(qI + Number(b.dataset.q), true))
   );
   resetQTimer();
+  /* karusel se točí jen když je vidět */
+  const quoteSection = qCard ? qCard.closest("section") : null;
+  if (quoteSection) {
+    const qIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          clearInterval(qTimer);
+          if (en.isIntersecting) resetQTimer();
+        });
+      },
+      { threshold: 0.1 }
+    );
+    qIO.observe(quoteSection);
+  }
   }
 
   /* ─────────────────────────────────────────────
@@ -530,16 +566,35 @@
     if (!target) return;
     let prev = scrollY();
     let cur = 0;
+    let last = "";
+    let running = false;
     function loop() {
       const y = scrollY();
       const v = y - prev;
       prev = y;
       const goal = Math.max(-1.1, Math.min(1.1, v * 0.028));
       cur += (goal - cur) * 0.1;
-      target.style.setProperty("--vskew", (Math.abs(cur) < 0.002 ? 0 : cur).toFixed(3) + "deg");
+      if (Math.abs(cur) < 0.002) cur = 0;
+      const val = cur === 0 ? "0deg" : cur.toFixed(3) + "deg";
+      if (val !== last) {
+        last = val;
+        target.style.setProperty("--vskew", val);
+      }
+      /* v klidu smyčku uspi — žádné zbytečné rAF ticky */
+      if (cur === 0 && v === 0) {
+        running = false;
+        return;
+      }
       raf(loop);
     }
-    raf(loop);
+    const wake = () => {
+      if (!running) {
+        running = true;
+        raf(loop);
+      }
+    };
+    wake();
+    bindScroll(wake);
   })();
 
   /* ─────────────────────────────────────────────
@@ -869,6 +924,32 @@
       { threshold: 0.5 }
     );
     statEls.forEach((el) => statIO.observe(el));
+  }
+
+  /* ─────────────────────────────────────────────
+     VÝKON — CSS animace běží jen ve viewportu
+  ───────────────────────────────────────────── */
+  const pauseIO = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => en.target.classList.toggle("fx-pause", !en.isIntersecting));
+    },
+    { rootMargin: "160px 0px" }
+  );
+  document.querySelectorAll(".hero, .section, .site-foot").forEach((s) => pauseIO.observe(s));
+
+  /* showcase — auto-rotace tabů jen když je sekce vidět */
+  const showcaseEl = document.querySelector(".showcase");
+  if (showcaseEl && scImgs.length) {
+    const showIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          clearInterval(scTimer);
+          if (en.isIntersecting) autoShow();
+        });
+      },
+      { threshold: 0.15 }
+    );
+    showIO.observe(showcaseEl);
   }
 
   /* ─────────────────────────────────────────────

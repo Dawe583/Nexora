@@ -90,7 +90,7 @@ button{cursor:pointer;border:none;background:none}
   padding:16px clamp(20px,3vw,64px);
   transition:background .4s,backdrop-filter .4s,border-color .4s;
   border-bottom:1px solid transparent}
-.site-head.scrolled{background:rgba(0,0,0,0.72);backdrop-filter:blur(16px);border-color:var(--border-soft)}
+.site-head.scrolled{background:rgba(0,0,0,0.82);backdrop-filter:blur(10px);border-color:var(--border-soft)}
 .brand{display:inline-flex;align-items:center}
 .site-nav{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:38px;font-size:14px;color:rgba(255,255,255,.85)}
 .site-nav a{transition:opacity .3s}
@@ -129,8 +129,8 @@ button{cursor:pointer;border:none;background:none}
 
 /* ═══════════ CHAT PANEL ═══════════ */
 .chat{position:relative;z-index:5;width:min(950px,100%);margin-top:60px;
-  border:1px solid var(--border-soft);border-radius:28px;background:rgba(13,12,11,0.72);
-  backdrop-filter:blur(16px);padding:26px 32px 30px;box-shadow:0 40px 100px -30px rgba(0,0,0,.85);text-align:left}
+  border:1px solid var(--border-soft);border-radius:28px;background:rgba(17,16,15,0.94);
+  padding:26px 32px 30px;box-shadow:0 40px 100px -30px rgba(0,0,0,.85);text-align:left}
 .chat--flat{backdrop-filter:none;background:var(--panel)}
 .chat__top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
 .chat__menu{width:32px;height:32px;border-radius:999px;border:1px solid var(--border);position:relative}
@@ -424,10 +424,11 @@ button{cursor:pointer;border:none;background:none}
 
 /* Floating ambient orbs */
 .fx-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.fx-orb{position:absolute;border-radius:50%;opacity:.4;filter:blur(100px);will-change:transform}
-.fx-orb--1{width:540px;height:540px;top:12%;left:-8%;background:radial-gradient(circle,rgba(224,150,120,.55),transparent 68%);animation:orb1 24s ease-in-out infinite}
-.fx-orb--2{width:620px;height:620px;top:52%;right:-12%;left:auto;background:radial-gradient(circle,rgba(120,180,200,.38),transparent 68%);animation:orb2 30s ease-in-out infinite}
-.fx-orb--3{width:460px;height:460px;top:82%;left:14%;background:radial-gradient(circle,rgba(190,130,150,.42),transparent 68%);animation:orb3 27s ease-in-out infinite}
+/* měkkost je předpočítaná v gradientu — žádný filter:blur, žádný extra rastr */
+.fx-orb{position:absolute;border-radius:50%;opacity:.4;will-change:transform}
+.fx-orb--1{width:540px;height:540px;top:12%;left:-8%;background:radial-gradient(circle,rgba(224,150,120,.34) 0%,rgba(224,150,120,.15) 36%,transparent 74%);animation:orb1 24s ease-in-out infinite}
+.fx-orb--2{width:620px;height:620px;top:52%;right:-12%;left:auto;background:radial-gradient(circle,rgba(120,180,200,.24) 0%,rgba(120,180,200,.1) 36%,transparent 74%);animation:orb2 30s ease-in-out infinite}
+.fx-orb--3{width:460px;height:460px;top:82%;left:14%;background:radial-gradient(circle,rgba(190,130,150,.27) 0%,rgba(190,130,150,.12) 36%,transparent 74%);animation:orb3 27s ease-in-out infinite}
 @keyframes orb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,50px) scale(1.12)}}
 @keyframes orb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-70px,-40px) scale(1.08)}}
 @keyframes orb3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-60px) scale(1.15)}}
@@ -626,7 +627,7 @@ button{cursor:pointer;border:none;background:none}
 @keyframes mistdrift{0%,100%{transform:translateX(-56%)}50%{transform:translateX(-44%)}}
 
 /* ── D) Noise overlay ── */
-.fx-noise{position:fixed;inset:-100%;width:300%;height:300%;z-index:999;pointer-events:none;opacity:.032;
+.fx-noise{position:fixed;inset:-4%;width:108%;height:108%;z-index:999;pointer-events:none;opacity:.032;will-change:transform;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:180px 180px;animation:grain .5s steps(2) infinite}
 @keyframes grain{0%,100%{transform:translate(0,0)}25%{transform:translate(-2%,-3%)}50%{transform:translate(3%,1%)}75%{transform:translate(-1%,3%)}}
@@ -726,7 +727,7 @@ button{cursor:pointer;border:none;background:none}
 @keyframes hillsdrift{0%,100%{transform:translateX(-51.5%)}50%{transform:translateX(-48.5%)}}
 
 /* ── D) Velocity skew (Lenis podpis) ── */
-main{transform:skewY(var(--vskew,0deg));transition:transform .1s linear;will-change:transform}
+main{transform:skewY(var(--vskew,0deg))}
 
 /* ── Prémiový polish ── */
 /* sheen na primárních tlačítkách */
@@ -775,9 +776,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visibl
   opacity:0;transition:opacity .4s}
 .cursor-dot{position:fixed;top:0;left:0;z-index:1501;pointer-events:none;
   width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--peach);
-  box-shadow:0 0 10px rgba(255,243,240,.8);opacity:0;transition:opacity .4s,transform .25s var(--ease)}
+  box-shadow:0 0 10px rgba(255,243,240,.8);opacity:0;transition:opacity .4s,scale .25s var(--ease)}
+.cursor-glow,.cursor-dot{will-change:transform}
 body.cursor-on .cursor-glow,body.cursor-on .cursor-dot{opacity:1}
-body.cursor-hot .cursor-dot{transform:scale(2.4)}
+body.cursor-hot .cursor-dot{scale:2.4}
 
 /* ═══════════ ZVUKOVÝ TOGGLE ═══════════ */
 .head-right{display:flex;align-items:center;gap:12px}
@@ -823,3 +825,10 @@ body.cursor-hot .cursor-dot{transform:scale(2.4)}
 .about-strip figure:hover img{transform:scale(1.06)}
 @media (max-width:700px){.about-strip{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}}
 .values-list{margin-top:56px;display:flex;flex-direction:column}
+
+/* ═══════════ VÝKON ═══════════ */
+/* Sekce mimo viewport mají zastavené CSS animace (šetří CPU/GPU, JS to přepíná) */
+.fx-pause,.fx-pause *,.fx-pause *::before,.fx-pause *::after{animation-play-state:paused!important}
+/* Izolace vykreslování sekcí — změny uvnitř nešpiní layout/paint okolí */
+.section{contain:layout paint}
+.hero{contain:layout paint}

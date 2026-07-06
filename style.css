@@ -507,7 +507,6 @@ button{cursor:pointer;border:none;background:none}
    (nativní scroll zůstává plynulý, bez zbytečných kompozitních vrstev) */
 @media (pointer:coarse),(hover:none){
   main{transform:none!important}
-  .cursor-glow,.cursor-dot{display:none!important}
   .fx-noise{display:none}
 }
 
@@ -783,18 +782,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 /* dokud běží preloader, drž vstupní animace */
 .pre .reveal.in{opacity:0;transform:translateY(22px)}
 .pre .split.in .hw>span{transform:translateY(118%);opacity:0}
-
-/* ═══════════ SVĚTELNÝ KURZOR ═══════════ */
-.cursor-glow{position:fixed;top:0;left:0;z-index:1500;pointer-events:none;mix-blend-mode:screen;
-  width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,220,195,.16),rgba(255,190,160,.05) 45%,transparent 70%);
-  opacity:0;transition:opacity .4s}
-.cursor-dot{position:fixed;top:0;left:0;z-index:1501;pointer-events:none;
-  width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--peach);
-  box-shadow:0 0 10px rgba(255,243,240,.8);opacity:0;transition:opacity .4s,scale .25s var(--ease)}
-.cursor-glow,.cursor-dot{will-change:transform}
-body.cursor-on .cursor-glow,body.cursor-on .cursor-dot{opacity:1}
-body.cursor-hot .cursor-dot{scale:2.4}
 
 /* ═══════════ ZVUKOVÝ TOGGLE ═══════════ */
 .head-right{display:flex;align-items:center;gap:12px}

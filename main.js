@@ -816,38 +816,6 @@
   }
 
   /* ─────────────────────────────────────────────
-     SVĚTELNÝ KURZOR
-  ───────────────────────────────────────────── */
-  const cGlow = document.querySelector(".cursor-glow");
-  const cDot = document.querySelector(".cursor-dot");
-  if (cGlow && cDot && fine && !reduce) {
-    let tx = -300, ty = -300, gx = -300, gy = -300, dx = -300, dy = -300, cursorRaf = null;
-    const follow = () => {
-      gx += (tx - gx) * 0.09;
-      gy += (ty - gy) * 0.09;
-      dx += (tx - dx) * 0.42;
-      dy += (ty - dy) * 0.42;
-      cGlow.style.transform = `translate(${gx.toFixed(1)}px,${gy.toFixed(1)}px) translate(-50%,-50%)`;
-      cDot.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) translate(-50%,-50%)`;
-      if (Math.abs(tx - gx) + Math.abs(ty - gy) > 0.2) cursorRaf = raf(follow);
-      else cursorRaf = null;
-    };
-    document.addEventListener("pointermove", (e) => {
-      tx = e.clientX;
-      ty = e.clientY;
-      if (!document.body.classList.contains("cursor-on")) {
-        gx = dx = tx;
-        gy = dy = ty;
-        document.body.classList.add("cursor-on");
-      }
-      const hot = e.target.closest && e.target.closest("a,button,.faq-item__q,.chat__tab,input");
-      document.body.classList.toggle("cursor-hot", !!hot);
-      if (!cursorRaf) cursorRaf = raf(follow);
-    });
-    document.addEventListener("pointerleave", () => document.body.classList.remove("cursor-on"));
-  }
-
-  /* ─────────────────────────────────────────────
      ZVUKOVÝ DESIGN (výchozí: vypnuto)
   ───────────────────────────────────────────── */
   const soundBtn = document.getElementById("soundBtn");

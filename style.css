@@ -24,7 +24,7 @@
   --pad:clamp(20px,4vw,40px);
 }
 
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);
   color:var(--text);
@@ -491,9 +491,24 @@ button{cursor:pointer;border:none;background:none}
   .fx-orb--2{width:420px;height:420px}
   .fx-orb--3{width:320px;height:320px}
 }
-/* Ctí uživatele s reduced-motion pouze u náběhových přechodů, ambient animace běží dál */
+/* Reduced-motion: utlumíme náběhy a zastavíme ambient smyčky (baterie + přístupnost) */
 @media (prefers-reduced-motion:reduce){
-  .reveal{transition-duration:.4s}
+  html{scroll-behavior:auto}
+  .reveal{transition-duration:.3s}
+  .fx-orb,.fx-noise,.logos__track,.ticker-chip__track span,
+  .why-card__art *,.orbit,.orbit--1,.orbit--2,.orbit--3,.orbit .og,
+  .orbit__sweep,.orbit__comet,.orbit__core,.hero__stars i,.hero__mist,
+  .showcase__img.is-active,.showcase__tab.is-active::after,
+  .log__dot,.chip__dot,.ci--mic,.cta__hills{animation:none!important}
+  main{transform:none!important}
+}
+
+/* Dotyková zařízení: žádná celostránková skew vrstva ani kurzorové efekty
+   (nativní scroll zůstává plynulý, bez zbytečných kompozitních vrstev) */
+@media (pointer:coarse),(hover:none){
+  main{transform:none!important}
+  .cursor-glow,.cursor-dot{display:none!important}
+  .fx-noise{display:none}
 }
 
 /* ═══════════════════════════════════════════════════════════
